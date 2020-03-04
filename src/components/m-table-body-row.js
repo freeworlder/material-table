@@ -26,6 +26,9 @@ export default class MTableBodyRow extends React.Component {
             value={value}
             key={"cell-" + this.props.data.tableData.id + "-" + columnDef.tableData.id}
             rowData={this.props.data}
+            onEditableCellClick={this.props.onEditableCellClick(columnDef.field)}
+            cellEditing={columnDef.editableCells && this.props.selectedCell.rowIndex === this.props.index && this.props.selectedCell.field === columnDef.field}
+            deselectCell={this.props.deselectCell(columnDef.field)}
           />
         );
       });
@@ -324,6 +327,7 @@ export default class MTableBodyRow extends React.Component {
                   onEditingApproved={onEditingApproved}
                   hasAnyEditingRow={this.props.hasAnyEditingRow}
                   treeDataMaxLevel={treeDataMaxLevel}
+                  onEditableCellClick={this.props.onEditableCellClick}
                 />
               );
             }
@@ -368,4 +372,10 @@ MTableBodyRow.propTypes = {
   onRowClick: PropTypes.func,
   onEditingApproved: PropTypes.func,
   onEditingCanceled: PropTypes.func,
+  selectedCell: PropTypes.shape({
+    rowIndex: PropTypes.number,
+    field: PropTypes.string
+  }),
+  onEditableCellClick: PropTypes.func,
+  deselectCell: PropTypes.func
 };

@@ -182,5 +182,7 @@ export const propTypes = {
   tableRef: PropTypes.any,
   style: PropTypes.object,
   page: PropTypes.number,
-  totalCount: PropTypes.number
+  totalCount: PropTypes.number,
+  cellEditingUpdate: PropTypes.func,
+  footerToolbar: PropTypes.object
 };
