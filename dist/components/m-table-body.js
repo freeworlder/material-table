@@ -94,7 +94,6 @@ var MTableBody = /*#__PURE__*/function (_React$Component) {
         var totalRows = _this.props.totalRecords;
         var currentPage = _this.props.currentPage;
         var rowsPerPage = _this.props.pageSize;
-        debugger;
 
         if (rowsPerPage * currentPage + rowIndex + 1 === totalRows) {
           // last row
