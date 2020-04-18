@@ -2,10 +2,11 @@
 import * as React from 'react';
 import TableCell from '@material-ui/core/TableCell';
 import Input from '@material-ui/core/Input';
+import Select from '@material-ui/core/Select';
 import PropTypes from 'prop-types';
 import OutsideClickHandler from 'react-outside-click-handler';
+import { withStyles } from '@material-ui/core';
 /* eslint-enable no-unused-vars */
-
 /* eslint-disable no-useless-escape */
 const isoDateRegex = /^\d{4}-(0[1-9]|1[0-2])-([12]\d|0[1-9]|3[01])([T\s](([01]\d|2[0-3])\:[0-5]\d|24\:00)(\:[0-5]\d([\.,]\d+)?)?([zZ]|([\+-])([01]\d|2[0-3])\:?([0-5]\d)?)?)?$/;
 /* eslint-enable no-useless-escape */
@@ -19,7 +20,8 @@ export default class MTableCell extends React.Component {
     }
 
     onFieldChange = event => {
-        this.setState({ fieldValue: event.target.value });
+        const value = event.target.value;
+        value && this.setState({ fieldValue: value });
     };
 
     onCellKeyPress = event => {
@@ -36,27 +38,74 @@ export default class MTableCell extends React.Component {
             });
     };
 
+    // onMultipleDropdownChanged = event => {
+    //     // tbd
+    // };
+
+    // onDropdownChanged = event => {
+    //     this.props.deselectCell(event.target.value, false);
+    // };
+
     getContent() {
         const value = this.state.fieldValue !== null ? this.state.fieldValue : this.props.value;
-        return this.props.cellEditing ? (
-            <OutsideClickHandler
-                onOutsideClick={() => {
-                    this.deselectCell(false);
-                }}
-            >
-                <Input
-                    onChange={this.onFieldChange}
-                    onKeyPress={this.onCellKeyPress}
-                    // suggestions={this.props.entities.map(entity => {
-                    //   return { label: entity.entity_name };
-                    // })}
-                    value={value}
-                    fullWidth
-                    autoFocus
-                />
-            </OutsideClickHandler>
+        let component;
+        if (this.props.cellEditing) {
+            const { cellEditingProps } = this.props.columnDef;
+            const editingType = cellEditingProps && cellEditingProps.type ? cellEditingProps.type : 'text';
+            const options = cellEditingProps && cellEditingProps.options && Array.isArray(cellEditingProps.options) ? cellEditingProps.options : [];
+            // const isMultiSelect = cellEditingProps ? !!cellEditingProps['multiselect'] : false;
+            switch (editingType) {
+                case 'dropdown':
+                    component = (
+                        <OutsideClickHandler
+                            onOutsideClick={() => {
+                                this.deselectCell(false);
+                            }}
+                        >
+                            <Select
+                                // onChange={isMultiSelect ? this.onMultipleDropdownChanged : this.onDropdownChanged}
+                                onChange={this.onFieldChange}
+                                value={!value ? '' : value}
+                                native
+                                style={{ width: '100%' }}
+                            >
+                                {!value ? <option key={value} value=""/> : null}
+                                {options.map(option => {
+                                    const label = !!option && option instanceof Object ? option.label : option;
+                                    const value = !!option && option instanceof Object ? option.value : option;
+                                    return (
+                                        <option key={value} value={value}>{label}</option>
+                                    );
+                                })}
+                            </Select>
+                        </OutsideClickHandler>
+                    );
+                    break;
+                // ignore-no-fallthrough-next-line
+                case 'text':
+                default:
+                    component = (
+                        <OutsideClickHandler
+                            onOutsideClick={() => {
+                                this.deselectCell(false);
+                            }}
+                        >
+                            <Input
+                                onChange={this.onFieldChange}
+                                onKeyPress={this.onCellKeyPress}
+                                // suggestions={this.props.entities.map(entity => {
+                                //   return { label: entity.entity_name };
+                                // })}
+                                value={value}
+                                fullWidth
+                                autoFocus
+                            />
+                        </OutsideClickHandler>
+                    );
 
-        ) : this.getRenderValue();
+            }
+        } else component = this.getRenderValue();
+        return component;
     }
 
     getRenderValue() {
@@ -196,5 +245,6 @@ MTableCell.propTypes = {
     rowData: PropTypes.object,
     onEditableCellClick: PropTypes.func,
     cellEditing: PropTypes.bool,
+    cellEditingProps: PropTypes.object,
     deselectCell: PropTypes.func
 };

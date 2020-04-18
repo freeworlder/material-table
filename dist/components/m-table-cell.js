@@ -35,9 +35,13 @@ var _TableCell = _interopRequireDefault(require("@material-ui/core/TableCell"));
 
 var _Input = _interopRequireDefault(require("@material-ui/core/Input"));
 
+var _Select = _interopRequireDefault(require("@material-ui/core/Select"));
+
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _reactOutsideClickHandler = _interopRequireDefault(require("react-outside-click-handler"));
+
+var _core = require("@material-ui/core");
 
 /* eslint-disable no-unused-vars */
 
@@ -56,8 +60,9 @@ var MTableCell = /*#__PURE__*/function (_React$Component) {
     (0, _classCallCheck2["default"])(this, MTableCell);
     _this = (0, _possibleConstructorReturn2["default"])(this, (0, _getPrototypeOf2["default"])(MTableCell).call(this, props));
     (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "onFieldChange", function (event) {
-      _this.setState({
-        fieldValue: event.target.value
+      var value = event.target.value;
+      value && _this.setState({
+        fieldValue: value
       });
     });
     (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "onCellKeyPress", function (event) {
@@ -73,6 +78,13 @@ var MTableCell = /*#__PURE__*/function (_React$Component) {
           fieldValue: null
         });
       });
+    });
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "onMultipleDropdownChanged", function (event) {// tbd
+    });
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "onDropdownChanged", function (event) {
+      console.log('Selected option: ', event.target.value);
+
+      _this.props.deselectCell(event.target.value, false);
     });
     (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "handleClickCell", function (e) {
       if (_this.props.columnDef.disableClick) {
@@ -114,20 +126,61 @@ var MTableCell = /*#__PURE__*/function (_React$Component) {
       var _this2 = this;
 
       var value = this.state.fieldValue !== null ? this.state.fieldValue : this.props.value;
-      return this.props.cellEditing ? React.createElement(_reactOutsideClickHandler["default"], {
-        onOutsideClick: function onOutsideClick() {
-          _this2.deselectCell(false);
+      var component;
+
+      if (this.props.cellEditing) {
+        var cellEditingProps = this.props.columnDef.cellEditingProps;
+        var editingType = cellEditingProps && cellEditingProps.type ? cellEditingProps.type : 'text';
+        var options = cellEditingProps && cellEditingProps.options && Array.isArray(cellEditingProps.options) ? cellEditingProps.options : []; // const isMultiSelect = cellEditingProps ? !!cellEditingProps['multiselect'] : false;
+
+        switch (editingType) {
+          case 'dropdown':
+            component = React.createElement(_reactOutsideClickHandler["default"], {
+              onOutsideClick: function onOutsideClick() {
+                _this2.deselectCell(false);
+              }
+            }, React.createElement(_Select["default"] // onChange={isMultiSelect ? this.onMultipleDropdownChanged : this.onDropdownChanged}
+            , {
+              onChange: this.onFieldChange,
+              value: !value ? '' : value,
+              "native": true,
+              style: {
+                width: '100%'
+              }
+            }, !value ? React.createElement("option", {
+              key: value,
+              value: ""
+            }) : null, options.map(function (option) {
+              var label = !!option && option instanceof Object ? option.label : option;
+              var value = !!option && option instanceof Object ? option.value : option;
+              return React.createElement("option", {
+                key: value,
+                value: value
+              }, label);
+            })));
+            break;
+          // ignore-no-fallthrough-next-line
+
+          case 'text':
+          default:
+            component = React.createElement(_reactOutsideClickHandler["default"], {
+              onOutsideClick: function onOutsideClick() {
+                _this2.deselectCell(false);
+              }
+            }, React.createElement(_Input["default"], {
+              onChange: this.onFieldChange,
+              onKeyPress: this.onCellKeyPress // suggestions={this.props.entities.map(entity => {
+              //   return { label: entity.entity_name };
+              // })}
+              ,
+              value: value,
+              fullWidth: true,
+              autoFocus: true
+            }));
         }
-      }, React.createElement(_Input["default"], {
-        onChange: this.onFieldChange,
-        onKeyPress: this.onCellKeyPress // suggestions={this.props.entities.map(entity => {
-        //   return { label: entity.entity_name };
-        // })}
-        ,
-        value: value,
-        fullWidth: true,
-        autoFocus: true
-      })) : this.getRenderValue();
+      } else component = this.getRenderValue();
+
+      return component;
     }
   }, {
     key: "getRenderValue",
@@ -249,5 +302,6 @@ MTableCell.propTypes = {
   rowData: _propTypes["default"].object,
   onEditableCellClick: _propTypes["default"].func,
   cellEditing: _propTypes["default"].bool,
+  cellEditingProps: _propTypes["default"].object,
   deselectCell: _propTypes["default"].func
 };
