@@ -709,7 +709,8 @@ var MaterialTable = /*#__PURE__*/function (_React$Component) {
         }, React.createElement(this.props.footerToolbar, {
           onFilterChange: this.onFilterChange,
           columns: this.state.columns,
-          data: this.state.data
+          data: this.state.data,
+          footerData: this.props.footerData
         })) : null;
         return React.createElement(_Table["default"], null, React.createElement(_TableFooter["default"], {
           style: {

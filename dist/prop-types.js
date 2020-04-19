@@ -190,6 +190,7 @@ var propTypes = {
   page: _propTypes["default"].number,
   totalCount: _propTypes["default"].number,
   cellEditingUpdate: _propTypes["default"].func,
-  footerToolbar: _propTypes["default"].object
+  footerToolbar: _propTypes["default"].object,
+  footerData: _propTypes["default"].oneOfType([_propTypes["default"].array, _propTypes["default"].object])
 };
 exports.propTypes = propTypes;

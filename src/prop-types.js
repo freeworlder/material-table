@@ -184,5 +184,6 @@ export const propTypes = {
   page: PropTypes.number,
   totalCount: PropTypes.number,
   cellEditingUpdate: PropTypes.func,
-  footerToolbar: PropTypes.object
+  footerToolbar: PropTypes.object,
+  footerData: PropTypes.oneOfType([PropTypes.array, PropTypes.object])
 };

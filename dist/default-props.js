@@ -60,6 +60,7 @@ var defaultProps = {
   actions: [],
   classes: {},
   columns: [],
+  footerData: [],
   components: {
     Action: MComponents.MTableAction,
     Actions: MComponents.MTableActions,
