@@ -79,13 +79,6 @@ var MTableCell = /*#__PURE__*/function (_React$Component) {
         });
       });
     });
-    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "onMultipleDropdownChanged", function (event) {// tbd
-    });
-    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "onDropdownChanged", function (event) {
-      console.log('Selected option: ', event.target.value);
-
-      _this.props.deselectCell(event.target.value, false);
-    });
     (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "handleClickCell", function (e) {
       if (_this.props.columnDef.disableClick) {
         e.stopPropagation();
@@ -122,6 +115,12 @@ var MTableCell = /*#__PURE__*/function (_React$Component) {
 
   (0, _createClass2["default"])(MTableCell, [{
     key: "getContent",
+    // onMultipleDropdownChanged = event => {
+    //     // tbd
+    // };
+    // onDropdownChanged = event => {
+    //     this.props.deselectCell(event.target.value, false);
+    // };
     value: function getContent() {
       var _this2 = this;
 
