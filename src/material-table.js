@@ -503,6 +503,7 @@ export default class MaterialTable extends React.Component {
                 <this.props.footerToolbar
                     onFilterChange={this.onFilterChange}
                     columns={this.state.columns}
+                    data={this.state.data}
                 />
                 {/*    TODO: add more vents (sort, search) to toolbar component*/}
             </TableRow> : null;
