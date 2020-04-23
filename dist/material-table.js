@@ -386,6 +386,8 @@ var MaterialTable = /*#__PURE__*/function (_React$Component) {
       _this.setState(_this.dataManager.getRenderState());
     });
     (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "renderTable", function (props) {
+      var footer = _this.renderFooter();
+
       return React.createElement(_Table["default"], {
         style: {
           tableLayout: props.options.fixedColumns && (props.options.fixedColumns.left || props.options.fixedColumns.right) ? 'fixed' : props.options.tableLayout
@@ -449,7 +451,7 @@ var MaterialTable = /*#__PURE__*/function (_React$Component) {
         prevButtonRef: _this.prevButtonRef,
         nextButtonRef: _this.nextButtonRef,
         totalRecords: _this.isRemoteData() ? _this.state.query.totalCount : _this.state.data.length
-      }));
+      }), footer);
     });
     (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "getColumnsWidth", function (props, count) {
       var result = [];
@@ -702,32 +704,20 @@ var MaterialTable = /*#__PURE__*/function (_React$Component) {
         var isOutsidePageNumbers = this.isOutsidePageNumbers(props);
         var currentPage = isOutsidePageNumbers ? Math.min(props.page, Math.floor(props.totalCount / this.state.pageSize)) : this.state.currentPage;
         var totalCount = isOutsidePageNumbers ? props.totalCount : this.state.data.length;
-        var footerToolbar = props.footerToolbar ? React.createElement(_TableRow["default"], {
-          style: {
-            display: 'grid'
-          }
-        }, React.createElement(this.props.footerToolbar, {
+        var footerToolbar = props.footerToolbar ? React.createElement(_TableRow["default"], null, React.createElement(this.props.footerToolbar, {
           onFilterChange: this.onFilterChange,
           columns: this.state.columns,
           data: this.state.data,
           footerData: this.props.footerData
         })) : null;
-        return React.createElement(_Table["default"], null, React.createElement(_TableFooter["default"], {
-          style: {
-            display: 'grid'
-          }
-        }, React.createElement(_TableRow["default"], null, React.createElement(props.components.Pagination, {
+        return React.createElement(_TableFooter["default"], null, React.createElement(_TableRow["default"], null, React.createElement(props.components.Pagination, {
           classes: {
             root: props.classes.paginationRoot,
             toolbar: props.classes.paginationToolbar,
             caption: props.classes.paginationCaption,
             selectRoot: props.classes.paginationSelectRoot
           },
-          style: {
-            "float": props.theme.direction === "rtl" ? "" : "right",
-            overflowX: 'auto'
-          },
-          colSpan: 3,
+          colSpan: 1000,
           count: this.isRemoteData() ? this.state.query.totalCount : totalCount,
           icons: props.icons,
           rowsPerPage: this.state.pageSize,
@@ -763,7 +753,7 @@ var MaterialTable = /*#__PURE__*/function (_React$Component) {
             return localization.labelDisplayedRows.replace('{from}', row.from).replace('{to}', row.to).replace('{count}', row.count);
           },
           labelRowsPerPage: localization.labelRowsPerPage
-        })), footerToolbar));
+        })), footerToolbar);
       }
     }
   }, {
@@ -772,7 +762,6 @@ var MaterialTable = /*#__PURE__*/function (_React$Component) {
       var _this5 = this;
 
       var props = this.getProps();
-      var footer = this.renderFooter();
       return React.createElement(_reactBeautifulDnd.DragDropContext, {
         onDragEnd: this.onDragEnd
       }, React.createElement(props.components.Container, {
@@ -879,7 +868,7 @@ var MaterialTable = /*#__PURE__*/function (_React$Component) {
           height: '100%',
           width: '100%'
         }
-      }, React.createElement(_LinearProgress["default"], null))), footer, (this.state.isLoading || props.isLoading) && props.options.loadingType === 'overlay' && React.createElement("div", {
+      }, React.createElement(_LinearProgress["default"], null))), (this.state.isLoading || props.isLoading) && props.options.loadingType === 'overlay' && React.createElement("div", {
         style: {
           position: 'absolute',
           top: 0,

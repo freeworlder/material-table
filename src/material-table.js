@@ -499,7 +499,7 @@ export default class MaterialTable extends React.Component {
                 ? props.totalCount
                 : this.state.data.length;
 
-            const footerToolbar = props.footerToolbar ? <TableRow style={{ display: 'grid' }}>
+            const footerToolbar = props.footerToolbar ? <TableRow>
                 <this.props.footerToolbar
                     onFilterChange={this.onFilterChange}
                     columns={this.state.columns}
@@ -509,120 +509,122 @@ export default class MaterialTable extends React.Component {
                 {/*    TODO: add more vents (sort, search) to toolbar component*/}
             </TableRow> : null;
             return (
-                <Table>
-                    <TableFooter style={{ display: 'grid' }}>
-                        <TableRow>
-                            <props.components.Pagination
-                                classes={{
-                                    root: props.classes.paginationRoot,
-                                    toolbar: props.classes.paginationToolbar,
-                                    caption: props.classes.paginationCaption,
-                                    selectRoot: props.classes.paginationSelectRoot,
-                                }}
-                                style={{ float: props.theme.direction === "rtl" ? "" : "right", overflowX: 'auto' }}
-                                colSpan={3}
-                                count={this.isRemoteData() ? this.state.query.totalCount : totalCount}
-                                icons={props.icons}
-                                rowsPerPage={this.state.pageSize}
-                                rowsPerPageOptions={props.options.pageSizeOptions}
-                                SelectProps={{
-                                    renderValue: value => <div
-                                        style={{ padding: '0px 5px' }}>{value + ' ' + localization.labelRowsSelect + ' '}</div>
-                                }}
-                                page={this.isRemoteData() ? this.state.query.page : currentPage}
-                                onChangePage={this.onChangePage}
-                                onChangeRowsPerPage={this.onChangeRowsPerPage}
-                                ActionsComponent={(subProps) => props.options.paginationType === 'normal' ?
-                                    <MTablePagination {...subProps} icons={props.icons} localization={localization}
-                                                      showFirstLastPageButtons={props.options.showFirstLastPageButtons}
-                                                      prevButtonRef={this.prevButtonRef}
-                                                      nextButtonRef={this.nextButtonRef}
-                                    /> :
-                                    <MTableSteppedPagination {...subProps} icons={props.icons}
-                                                             localization={localization}
-                                                             showFirstLastPageButtons={props.options.showFirstLastPageButtons}
-                                                             prevButtonRef={this.prevButtonRef}
-                                                             nextButtonRef={this.nextButtonRef}
-                                    />}
-                                labelDisplayedRows={(row) => localization.labelDisplayedRows.replace('{from}', row.from).replace('{to}', row.to).replace('{count}', row.count)}
-                                labelRowsPerPage={localization.labelRowsPerPage}
-                            />
-                        </TableRow>
-                        {footerToolbar}
-                    </TableFooter>
-                </Table>
+                <TableFooter>
+                    <TableRow>
+                        <props.components.Pagination
+                            classes={{
+                                root: props.classes.paginationRoot,
+                                toolbar: props.classes.paginationToolbar,
+                                caption: props.classes.paginationCaption,
+                                selectRoot: props.classes.paginationSelectRoot,
+                            }}
+                            colSpan={1000}
+                            count={this.isRemoteData() ? this.state.query.totalCount : totalCount}
+                            icons={props.icons}
+                            rowsPerPage={this.state.pageSize}
+                            rowsPerPageOptions={props.options.pageSizeOptions}
+                            SelectProps={{
+                                renderValue: value => <div
+                                    style={{ padding: '0px 5px' }}>{value + ' ' + localization.labelRowsSelect + ' '}</div>
+                            }}
+                            page={this.isRemoteData() ? this.state.query.page : currentPage}
+                            onChangePage={this.onChangePage}
+                            onChangeRowsPerPage={this.onChangeRowsPerPage}
+                            ActionsComponent={(subProps) => props.options.paginationType === 'normal' ?
+                                <MTablePagination {...subProps} icons={props.icons} localization={localization}
+                                                  showFirstLastPageButtons={props.options.showFirstLastPageButtons}
+                                                  prevButtonRef={this.prevButtonRef}
+                                                  nextButtonRef={this.nextButtonRef}
+                                /> :
+                                <MTableSteppedPagination {...subProps} icons={props.icons}
+                                                         localization={localization}
+                                                         showFirstLastPageButtons={props.options.showFirstLastPageButtons}
+                                                         prevButtonRef={this.prevButtonRef}
+                                                         nextButtonRef={this.nextButtonRef}
+                                />}
+                            labelDisplayedRows={(row) => localization.labelDisplayedRows.replace('{from}', row.from).replace('{to}', row.to).replace('{count}', row.count)}
+                            labelRowsPerPage={localization.labelRowsPerPage}
+                        />
+                    </TableRow>
+                    {footerToolbar}
+                </TableFooter>
             );
         }
     }
 
-    renderTable = (props) => (
-        <Table
-            style={{ tableLayout: (props.options.fixedColumns && (props.options.fixedColumns.left || props.options.fixedColumns.right)) ? 'fixed' : props.options.tableLayout }}>
-            {props.options.header &&
-            <props.components.Header
-                actions={props.actions}
-                localization={{ ...MaterialTable.defaultProps.localization.header, ...this.props.localization.header }}
-                columns={this.state.columns}
-                hasSelection={props.options.selection}
-                headerStyle={props.options.headerStyle}
-                icons={props.icons}
-                selectedCount={this.state.selectedCount}
-                dataCount={
-                    props.parentChildData ? this.state.treefiedDataLength : (
-                        (this.state.columns.filter(col => col.tableData.groupOrder > -1).length > 0) ? this.state.groupedDataLength : this.state.data.length
-                    )
+    renderTable = (props) => {
+        const footer = this.renderFooter();
+
+        return (
+            <Table
+                style={{ tableLayout: (props.options.fixedColumns && (props.options.fixedColumns.left || props.options.fixedColumns.right)) ? 'fixed' : props.options.tableLayout }}>
+                {props.options.header &&
+                <props.components.Header
+                    actions={props.actions}
+                    localization={{ ...MaterialTable.defaultProps.localization.header, ...this.props.localization.header }}
+                    columns={this.state.columns}
+                    hasSelection={props.options.selection}
+                    headerStyle={props.options.headerStyle}
+                    icons={props.icons}
+                    selectedCount={this.state.selectedCount}
+                    dataCount={
+                        props.parentChildData ? this.state.treefiedDataLength : (
+                            (this.state.columns.filter(col => col.tableData.groupOrder > -1).length > 0) ? this.state.groupedDataLength : this.state.data.length
+                        )
+                    }
+                    hasDetailPanel={!!props.detailPanel}
+                    detailPanelColumnAlignment={props.options.detailPanelColumnAlignment}
+                    showActionsColumn={props.actions && props.actions.filter(a => a.position === "row" || typeof a === "function").length > 0}
+                    showSelectAllCheckbox={props.options.showSelectAllCheckbox}
+                    orderBy={this.state.orderBy}
+                    orderDirection={this.state.orderDirection}
+                    onAllSelected={this.onAllSelected}
+                    onOrderChange={this.onChangeOrder}
+                    actionsHeaderIndex={props.options.actionsColumnIndex}
+                    sorting={props.options.sorting}
+                    grouping={props.options.grouping}
+                    isTreeData={this.props.parentChildData !== undefined}
+                    draggable={props.options.draggable}
+                    thirdSortClick={props.options.thirdSortClick}
+                    treeDataMaxLevel={this.state.treeDataMaxLevel}
+                    options={props.options}
+                />
                 }
-                hasDetailPanel={!!props.detailPanel}
-                detailPanelColumnAlignment={props.options.detailPanelColumnAlignment}
-                showActionsColumn={props.actions && props.actions.filter(a => a.position === "row" || typeof a === "function").length > 0}
-                showSelectAllCheckbox={props.options.showSelectAllCheckbox}
-                orderBy={this.state.orderBy}
-                orderDirection={this.state.orderDirection}
-                onAllSelected={this.onAllSelected}
-                onOrderChange={this.onChangeOrder}
-                actionsHeaderIndex={props.options.actionsColumnIndex}
-                sorting={props.options.sorting}
-                grouping={props.options.grouping}
-                isTreeData={this.props.parentChildData !== undefined}
-                draggable={props.options.draggable}
-                thirdSortClick={props.options.thirdSortClick}
-                treeDataMaxLevel={this.state.treeDataMaxLevel}
-                options={props.options}
-            />
-            }
-            <props.components.Body
-                actions={props.actions}
-                components={props.components}
-                icons={props.icons}
-                renderData={this.state.renderData}
-                currentPage={this.state.currentPage}
-                initialFormData={props.initialFormData}
-                pageSize={this.state.pageSize}
-                columns={this.state.columns}
-                detailPanel={props.detailPanel}
-                options={props.options}
-                getFieldValue={this.dataManager.getFieldValue}
-                isTreeData={this.props.parentChildData !== undefined}
-                onFilterChanged={this.onFilterChange}
-                onRowSelected={this.onRowSelected}
-                onToggleDetailPanel={this.onToggleDetailPanel}
-                onGroupExpandChanged={this.onGroupExpandChanged}
-                onTreeExpandChanged={this.onTreeExpandChanged}
-                onEditingCanceled={this.onEditingCanceled}
-                onEditingApproved={this.onEditingApproved}
-                localization={{ ...MaterialTable.defaultProps.localization.body, ...this.props.localization.body }}
-                onRowClick={this.props.onRowClick}
-                showAddRow={this.state.showAddRow}
-                hasAnyEditingRow={!!(this.state.lastEditingRow || this.state.showAddRow)}
-                hasDetailPanel={!!props.detailPanel}
-                treeDataMaxLevel={this.state.treeDataMaxLevel}
-                cellEditingUpdate={this.props.cellEditingUpdate}
-                prevButtonRef={this.prevButtonRef}
-                nextButtonRef={this.nextButtonRef}
-                totalRecords={this.isRemoteData() ? this.state.query.totalCount : this.state.data.length}
-            />
-        </Table>
-    );
+                <props.components.Body
+                    actions={props.actions}
+                    components={props.components}
+                    icons={props.icons}
+                    renderData={this.state.renderData}
+                    currentPage={this.state.currentPage}
+                    initialFormData={props.initialFormData}
+                    pageSize={this.state.pageSize}
+                    columns={this.state.columns}
+                    detailPanel={props.detailPanel}
+                    options={props.options}
+                    getFieldValue={this.dataManager.getFieldValue}
+                    isTreeData={this.props.parentChildData !== undefined}
+                    onFilterChanged={this.onFilterChange}
+                    onRowSelected={this.onRowSelected}
+                    onToggleDetailPanel={this.onToggleDetailPanel}
+                    onGroupExpandChanged={this.onGroupExpandChanged}
+                    onTreeExpandChanged={this.onTreeExpandChanged}
+                    onEditingCanceled={this.onEditingCanceled}
+                    onEditingApproved={this.onEditingApproved}
+                    localization={{ ...MaterialTable.defaultProps.localization.body, ...this.props.localization.body }}
+                    onRowClick={this.props.onRowClick}
+                    showAddRow={this.state.showAddRow}
+                    hasAnyEditingRow={!!(this.state.lastEditingRow || this.state.showAddRow)}
+                    hasDetailPanel={!!props.detailPanel}
+                    treeDataMaxLevel={this.state.treeDataMaxLevel}
+                    cellEditingUpdate={this.props.cellEditingUpdate}
+                    prevButtonRef={this.prevButtonRef}
+                    nextButtonRef={this.nextButtonRef}
+                    totalRecords={this.isRemoteData() ? this.state.query.totalCount : this.state.data.length}
+                />
+                {footer}
+            </Table>
+        );
+    }
 
     getColumnsWidth = (props, count) => {
         let result = [];
@@ -657,7 +659,6 @@ export default class MaterialTable extends React.Component {
 
     render() {
         const props = this.getProps();
-        const footer = this.renderFooter();
 
         return (
             <DragDropContext onDragEnd={this.onDragEnd}>
@@ -772,7 +773,6 @@ export default class MaterialTable extends React.Component {
                         </div>
                     </div>
                     }
-                    {footer}
 
                     {(this.state.isLoading || props.isLoading) && props.options.loadingType === 'overlay' &&
                     <div style={{ position: 'absolute', top: 0, left: 0, height: '100%', width: '100%', zIndex: 11 }}>
