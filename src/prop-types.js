@@ -68,7 +68,7 @@ export const propTypes = {
     Row: PropTypes.oneOfType([PropTypes.element, PropTypes.func, StyledComponent]),
     Toolbar: PropTypes.oneOfType([PropTypes.element, PropTypes.func, StyledComponent])
   }),
-  data: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.object), PropTypes.func]).isRequired,
+  data: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.object), PropTypes.func, PropTypes.array]).isRequired,
   editable: PropTypes.shape({
     onRowAdd: PropTypes.func,
     onRowUpdate: PropTypes.func,
@@ -184,6 +184,6 @@ export const propTypes = {
   page: PropTypes.number,
   totalCount: PropTypes.number,
   cellEditingUpdate: PropTypes.func,
-  footerToolbar: PropTypes.object,
+  footerToolbar: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   footerData: PropTypes.oneOfType([PropTypes.array, PropTypes.object])
 };

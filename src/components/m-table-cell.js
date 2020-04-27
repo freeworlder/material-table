@@ -216,7 +216,7 @@ export default class MTableCell extends React.Component {
 
     render() {
 
-        const { icons, columnDef, rowData, ...cellProps } = this.props;
+        const { icons, columnDef, rowData, selectedCell, deselectCell, cellEditing, onEditableCellClick, ...cellProps } = this.props;
 
         return (
             <TableCell
@@ -242,7 +242,7 @@ MTableCell.defaultProps = {
 MTableCell.propTypes = {
     columnDef: PropTypes.object.isRequired,
     value: PropTypes.any,
-    rowData: PropTypes.object,
+    rowData: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
     onEditableCellClick: PropTypes.func,
     cellEditing: PropTypes.bool,
     cellEditingProps: PropTypes.object,

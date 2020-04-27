@@ -276,7 +276,11 @@ var MTableCell = /*#__PURE__*/function (_React$Component) {
           icons = _this$props.icons,
           columnDef = _this$props.columnDef,
           rowData = _this$props.rowData,
-          cellProps = (0, _objectWithoutProperties2["default"])(_this$props, ["icons", "columnDef", "rowData"]);
+          selectedCell = _this$props.selectedCell,
+          deselectCell = _this$props.deselectCell,
+          cellEditing = _this$props.cellEditing,
+          onEditableCellClick = _this$props.onEditableCellClick,
+          cellProps = (0, _objectWithoutProperties2["default"])(_this$props, ["icons", "columnDef", "rowData", "selectedCell", "deselectCell", "cellEditing", "onEditableCellClick"]);
       return React.createElement(_TableCell["default"], (0, _extends2["default"])({
         size: this.props.size
       }, cellProps, {
@@ -298,7 +302,7 @@ MTableCell.defaultProps = {
 MTableCell.propTypes = {
   columnDef: _propTypes["default"].object.isRequired,
   value: _propTypes["default"].any,
-  rowData: _propTypes["default"].object,
+  rowData: _propTypes["default"].oneOfType([_propTypes["default"].object, _propTypes["default"].array]),
   onEditableCellClick: _propTypes["default"].func,
   cellEditing: _propTypes["default"].bool,
   cellEditingProps: _propTypes["default"].object,

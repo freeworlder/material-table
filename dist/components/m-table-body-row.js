@@ -386,7 +386,11 @@ var MTableBodyRow = /*#__PURE__*/function (_React$Component) {
           treeDataMaxLevel = _this$props.treeDataMaxLevel,
           localization = _this$props.localization,
           actions = _this$props.actions,
-          rowProps = (0, _objectWithoutProperties2["default"])(_this$props, ["icons", "data", "columns", "components", "detailPanel", "getFieldValue", "isTreeData", "onRowClick", "onRowSelected", "onTreeExpandChanged", "onToggleDetailPanel", "onEditingCanceled", "onEditingApproved", "options", "hasAnyEditingRow", "treeDataMaxLevel", "localization", "actions"]);
+          deselectCell = _this$props.deselectCell,
+          selectedCell = _this$props.selectedCell,
+          onEditableCellClick = _this$props.onEditableCellClick,
+          cellEditing = _this$props.cellEditing,
+          rowProps = (0, _objectWithoutProperties2["default"])(_this$props, ["icons", "data", "columns", "components", "detailPanel", "getFieldValue", "isTreeData", "onRowClick", "onRowSelected", "onTreeExpandChanged", "onToggleDetailPanel", "onEditingCanceled", "onEditingApproved", "options", "hasAnyEditingRow", "treeDataMaxLevel", "localization", "actions", "deselectCell", "selectedCell", "onEditableCellClick", "cellEditing"]);
       return React.createElement(React.Fragment, null, React.createElement(_TableRow["default"], (0, _extends2["default"])({
         selected: hasAnyEditingRow
       }, rowProps, {
@@ -465,7 +469,7 @@ MTableBodyRow.propTypes = {
   actions: _propTypes["default"].array,
   icons: _propTypes["default"].any.isRequired,
   index: _propTypes["default"].number.isRequired,
-  data: _propTypes["default"].object.isRequired,
+  data: _propTypes["default"].oneOfType([_propTypes["default"].object, _propTypes["default"].array]).isRequired,
   detailPanel: _propTypes["default"].oneOfType([_propTypes["default"].func, _propTypes["default"].arrayOf(_propTypes["default"].oneOfType([_propTypes["default"].object, _propTypes["default"].func]))]),
   hasAnyEditingRow: _propTypes["default"].bool,
   options: _propTypes["default"].object.isRequired,

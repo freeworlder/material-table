@@ -80,7 +80,7 @@ var propTypes = {
     Row: _propTypes["default"].oneOfType([_propTypes["default"].element, _propTypes["default"].func, StyledComponent]),
     Toolbar: _propTypes["default"].oneOfType([_propTypes["default"].element, _propTypes["default"].func, StyledComponent])
   }),
-  data: _propTypes["default"].oneOfType([_propTypes["default"].arrayOf(_propTypes["default"].object), _propTypes["default"].func]).isRequired,
+  data: _propTypes["default"].oneOfType([_propTypes["default"].arrayOf(_propTypes["default"].object), _propTypes["default"].func, _propTypes["default"].array]).isRequired,
   editable: _propTypes["default"].shape({
     onRowAdd: _propTypes["default"].func,
     onRowUpdate: _propTypes["default"].func,
@@ -190,7 +190,7 @@ var propTypes = {
   page: _propTypes["default"].number,
   totalCount: _propTypes["default"].number,
   cellEditingUpdate: _propTypes["default"].func,
-  footerToolbar: _propTypes["default"].object,
+  footerToolbar: _propTypes["default"].oneOfType([_propTypes["default"].object, _propTypes["default"].func]),
   footerData: _propTypes["default"].oneOfType([_propTypes["default"].array, _propTypes["default"].object])
 };
 exports.propTypes = propTypes;
