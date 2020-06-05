@@ -209,7 +209,8 @@ var defaultProps = {
     defaultExpanded: false,
     detailPanelColumnAlignment: 'left',
     thirdSortClick: true,
-    overflowY: 'auto'
+    overflowY: 'auto',
+    groupInnerSelection: true
   },
   localization: {
     grouping: {

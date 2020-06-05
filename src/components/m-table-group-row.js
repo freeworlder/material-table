@@ -46,6 +46,7 @@ export default class MTableGroupRow extends React.Component {
             options={this.props.options}
             hasAnyEditingRow={this.props.hasAnyEditingRow}
             isTreeData={this.props.isTreeData}
+            groupInnerSelection={this.props.groupInnerSelection}
           />
         ));
       }
@@ -68,6 +69,7 @@ export default class MTableGroupRow extends React.Component {
                 onEditingCanceled={this.props.onEditingCanceled}
                 onEditingApproved={this.props.onEditingApproved}
                 getFieldValue={this.props.getFieldValue}
+                groupInnerSelection={this.props.groupInnerSelection}
               />
             );
           } else {
@@ -91,6 +93,7 @@ export default class MTableGroupRow extends React.Component {
                 onEditingCanceled={this.props.onEditingCanceled}
                 onEditingApproved={this.props.onEditingApproved}
                 hasAnyEditingRow={this.props.hasAnyEditingRow}
+                groupInnerSelection={this.props.groupInnerSelection}
               />
             );
           }
@@ -174,4 +177,5 @@ MTableGroupRow.propTypes = {
   onEditingApproved: PropTypes.func,
   options: PropTypes.object,
   path: PropTypes.arrayOf(PropTypes.number),
+  groupInnerSelection: PropTypes.bool
 };

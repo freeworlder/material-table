@@ -155,6 +155,7 @@ var propTypes = {
     showEmptyDataSourceMessage: _propTypes["default"].bool,
     showFirstLastPageButtons: _propTypes["default"].bool,
     showSelectAllCheckbox: _propTypes["default"].bool,
+    groupInnerSelection: _propTypes["default"].bool,
     showTitle: _propTypes["default"].bool,
     showTextRowsSelected: _propTypes["default"].bool,
     sorting: _propTypes["default"].bool,

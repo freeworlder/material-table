@@ -195,7 +195,16 @@ export default class MTableBodyRow extends React.Component {
   render() {
     const size = CommonValues.elementSize(this.props);
     const renderColumns = this.renderColumns();
-    if (this.props.options.selection) {
+    if (
+      (this.props.isTreeData &&
+        (
+          (this.props.data.tableData.childRows && this.props.data.tableData.childRows.length > 0 && this.props.selection) || // group row with selection mode on
+          ((!this.props.data.tableData.childRows || this.props.data.tableData.childRows.length) && this.props.groupInnerSelection) // inner group row with inner selection mode on
+        )
+      ) || (
+        !this.props.isTreeData && this.props.selection // non-tree mode with selection mode on
+      )
+    ) {
       renderColumns.splice(0, 0, this.renderSelectionColumn());
     }
     if (this.props.actions && this.props.actions.filter(a => a.position === "row" || typeof a === "function").length > 0) {
@@ -388,5 +397,6 @@ MTableBodyRow.propTypes = {
     field: PropTypes.string
   }),
   onEditableCellClick: PropTypes.func,
-  deselectCell: PropTypes.func
+  deselectCell: PropTypes.func,
+  groupInnerSelection: PropTypes.bool
 };

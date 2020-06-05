@@ -21,13 +21,13 @@ var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/cl
 
 var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
 
-var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
-
-var _getPrototypeOf3 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
-
 var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
 
 var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
 
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
 
@@ -49,15 +49,42 @@ var React = _interopRequireWildcard(require("react"));
 
 var CommonValues = _interopRequireWildcard(require("../utils/common-values"));
 
-/* eslint-disable no-unused-vars */
+function _createSuper2(Derived) {
+  function isNativeReflectConstruct() {
+    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+    if (Reflect.construct.sham) return false;
+    if (typeof Proxy === "function") return true;
+
+    try {
+      Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  return function () {
+    var Super = (0, _getPrototypeOf2["default"])(Derived),
+        result;
+
+    if (isNativeReflectConstruct()) {
+      var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor;
+      result = Reflect.construct(Super, arguments, NewTarget);
+    } else {
+      result = Super.apply(this, arguments);
+    }
+
+    return (0, _possibleConstructorReturn2["default"])(this, result);
+  };
+}
 
 /* eslint-enable no-unused-vars */
 var MTableBodyRow = /*#__PURE__*/function (_React$Component) {
   (0, _inherits2["default"])(MTableBodyRow, _React$Component);
 
-  function MTableBodyRow() {
-    var _getPrototypeOf2;
+  var _super = _createSuper2(MTableBodyRow);
 
+  function MTableBodyRow() {
     var _this;
 
     (0, _classCallCheck2["default"])(this, MTableBodyRow);
@@ -66,7 +93,7 @@ var MTableBodyRow = /*#__PURE__*/function (_React$Component) {
       args[_key] = arguments[_key];
     }
 
-    _this = (0, _possibleConstructorReturn2["default"])(this, (_getPrototypeOf2 = (0, _getPrototypeOf3["default"])(MTableBodyRow)).call.apply(_getPrototypeOf2, [this].concat(args)));
+    _this = _super.call.apply(_super, [this].concat(args));
     (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "rotateIconStyle", function (isOpen) {
       return {
         transform: isOpen ? 'rotate(90deg)' : 'none'
@@ -300,7 +327,10 @@ var MTableBodyRow = /*#__PURE__*/function (_React$Component) {
       var size = CommonValues.elementSize(this.props);
       var renderColumns = this.renderColumns();
 
-      if (this.props.options.selection) {
+      if (this.props.isTreeData && (this.props.data.tableData.childRows && this.props.data.tableData.childRows.length > 0 && this.props.selection || // group row with selection mode on
+      (!this.props.data.tableData.childRows || this.props.data.tableData.childRows.length) && this.props.groupInnerSelection // inner group row with inner selection mode on
+      ) || !this.props.isTreeData && this.props.selection // non-tree mode with selection mode on
+      ) {
         renderColumns.splice(0, 0, this.renderSelectionColumn());
       }
 
@@ -394,7 +424,7 @@ var MTableBodyRow = /*#__PURE__*/function (_React$Component) {
       return React.createElement(React.Fragment, null, React.createElement(_TableRow["default"], (0, _extends2["default"])({
         selected: hasAnyEditingRow
       }, rowProps, {
-        hover: onRowClick ? true : false,
+        hover: !!onRowClick,
         style: this.getStyle(this.props.index, this.props.level),
         onClick: function onClick(event) {
           onRowClick && onRowClick(event, _this5.props.data, function (panelIndex) {
@@ -487,5 +517,6 @@ MTableBodyRow.propTypes = {
     field: _propTypes["default"].string
   }),
   onEditableCellClick: _propTypes["default"].func,
-  deselectCell: _propTypes["default"].func
+  deselectCell: _propTypes["default"].func,
+  groupInnerSelection: _propTypes["default"].bool
 };

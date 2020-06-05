@@ -213,6 +213,7 @@ class MTableBody extends React.Component {
                     ref={ref}
                     selectedCell={this.state.selectedCell}
                     onEditableCellClick={this.onEditableCellClick(index)}
+                    groupInnerSelection={this.props.groupInnerSelection}
                 />
             );
         });
@@ -310,7 +311,8 @@ MTableBody.defaultProps = {
         emptyDataSourceMessage: 'No records to display',
         filterRow: {},
         editRow: {}
-    }
+    },
+    groupInnerSelection: false
 };
 
 MTableBody.propTypes = {
@@ -343,7 +345,8 @@ MTableBody.propTypes = {
     cellEditingUpdate: PropTypes.func,
     prevButtonRef: PropTypes.object,
     nextButtonRef: PropTypes.object,
-    totalRecords: PropTypes.number
+    totalRecords: PropTypes.number,
+    groupInnerSelection: PropTypes.bool
 };
 
 export default MTableBody;

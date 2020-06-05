@@ -15,13 +15,13 @@ var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/cl
 
 var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
 
-var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
-
-var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
-
 var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
 
 var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
 
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
 
@@ -57,17 +57,46 @@ var _propTypes = _interopRequireWildcard(require("prop-types"));
 
 var React = _interopRequireWildcard(require("react"));
 
-/* eslint-disable no-unused-vars */
+function _createSuper2(Derived) {
+  function isNativeReflectConstruct() {
+    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+    if (Reflect.construct.sham) return false;
+    if (typeof Proxy === "function") return true;
+
+    try {
+      Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  return function () {
+    var Super = (0, _getPrototypeOf2["default"])(Derived),
+        result;
+
+    if (isNativeReflectConstruct()) {
+      var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor;
+      result = Reflect.construct(Super, arguments, NewTarget);
+    } else {
+      result = Super.apply(this, arguments);
+    }
+
+    return (0, _possibleConstructorReturn2["default"])(this, result);
+  };
+}
 
 /* eslint-enable no-unused-vars */
 var MTableToolbar = /*#__PURE__*/function (_React$Component) {
   (0, _inherits2["default"])(MTableToolbar, _React$Component);
 
+  var _super = _createSuper2(MTableToolbar);
+
   function MTableToolbar(props) {
     var _this;
 
     (0, _classCallCheck2["default"])(this, MTableToolbar);
-    _this = (0, _possibleConstructorReturn2["default"])(this, (0, _getPrototypeOf2["default"])(MTableToolbar).call(this, props));
+    _this = _super.call(this, props);
     (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "defaultExportCsv", function () {
       var columns = _this.props.columns.filter(function (columnDef) {
         return !columnDef.hidden && columnDef.field && columnDef["export"] !== false;
