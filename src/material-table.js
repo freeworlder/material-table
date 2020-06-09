@@ -620,7 +620,6 @@ export default class MaterialTable extends React.Component {
                     prevButtonRef={this.prevButtonRef}
                     nextButtonRef={this.nextButtonRef}
                     totalRecords={this.isRemoteData() ? this.state.query.totalCount : this.state.data.length}
-                    groupInnerSelection={this.props.options.groupInnerSelection}
                 />
                 {footer}
             </Table>

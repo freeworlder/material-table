@@ -17,13 +17,13 @@ var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/cl
 
 var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
 
-var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
-
-var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
-
 var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
 
 var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
 
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
 
@@ -37,46 +37,17 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var React = _interopRequireWildcard(require("react"));
 
-function _createSuper2(Derived) {
-  function isNativeReflectConstruct() {
-    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
-    if (Reflect.construct.sham) return false;
-    if (typeof Proxy === "function") return true;
-
-    try {
-      Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
-      return true;
-    } catch (e) {
-      return false;
-    }
-  }
-
-  return function () {
-    var Super = (0, _getPrototypeOf2["default"])(Derived),
-        result;
-
-    if (isNativeReflectConstruct()) {
-      var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor;
-      result = Reflect.construct(Super, arguments, NewTarget);
-    } else {
-      result = Super.apply(this, arguments);
-    }
-
-    return (0, _possibleConstructorReturn2["default"])(this, result);
-  };
-}
+/* eslint-disable no-unused-vars */
 
 /* eslint-enable no-unused-vars */
 var MTableBody = /*#__PURE__*/function (_React$Component) {
   (0, _inherits2["default"])(MTableBody, _React$Component);
 
-  var _super = _createSuper2(MTableBody);
-
   function MTableBody(props) {
     var _this;
 
     (0, _classCallCheck2["default"])(this, MTableBody);
-    _this = _super.call(this, props);
+    _this = (0, _possibleConstructorReturn2["default"])(this, (0, _getPrototypeOf2["default"])(MTableBody).call(this, props));
     (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "onEditableCellClick", function (rowIndex) {
       return function (field) {
         return function ()
@@ -314,8 +285,7 @@ var MTableBody = /*#__PURE__*/function (_React$Component) {
           localization: (0, _objectSpread3["default"])({}, MTableBody.defaultProps.localization.editRow, _this3.props.localization.editRow),
           ref: ref,
           selectedCell: _this3.state.selectedCell,
-          onEditableCellClick: _this3.onEditableCellClick(index),
-          groupInnerSelection: _this3.props.groupInnerSelection
+          onEditableCellClick: _this3.onEditableCellClick(index)
         });
       });
     }
@@ -400,8 +370,7 @@ MTableBody.defaultProps = {
     emptyDataSourceMessage: 'No records to display',
     filterRow: {},
     editRow: {}
-  },
-  groupInnerSelection: false
+  }
 };
 MTableBody.propTypes = {
   actions: _propTypes["default"].array,
@@ -433,8 +402,7 @@ MTableBody.propTypes = {
   cellEditingUpdate: _propTypes["default"].func,
   prevButtonRef: _propTypes["default"].object,
   nextButtonRef: _propTypes["default"].object,
-  totalRecords: _propTypes["default"].number,
-  groupInnerSelection: _propTypes["default"].bool
+  totalRecords: _propTypes["default"].number
 };
 var _default = MTableBody;
 exports["default"] = _default;

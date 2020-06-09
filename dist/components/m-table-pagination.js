@@ -15,13 +15,13 @@ var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/cl
 
 var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
 
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf3 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
 var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
 
 var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
-
-var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
-
-var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
 
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
 
@@ -37,42 +37,15 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var React = _interopRequireWildcard(require("react"));
 
-function _createSuper2(Derived) {
-  function isNativeReflectConstruct() {
-    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
-    if (Reflect.construct.sham) return false;
-    if (typeof Proxy === "function") return true;
-
-    try {
-      Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
-      return true;
-    } catch (e) {
-      return false;
-    }
-  }
-
-  return function () {
-    var Super = (0, _getPrototypeOf2["default"])(Derived),
-        result;
-
-    if (isNativeReflectConstruct()) {
-      var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor;
-      result = Reflect.construct(Super, arguments, NewTarget);
-    } else {
-      result = Super.apply(this, arguments);
-    }
-
-    return (0, _possibleConstructorReturn2["default"])(this, result);
-  };
-}
+/* eslint-disable no-unused-vars */
 
 /* eslint-enable no-unused-vars */
 var MTablePaginationInner = /*#__PURE__*/function (_React$Component) {
   (0, _inherits2["default"])(MTablePaginationInner, _React$Component);
 
-  var _super = _createSuper2(MTablePaginationInner);
-
   function MTablePaginationInner() {
+    var _getPrototypeOf2;
+
     var _this;
 
     (0, _classCallCheck2["default"])(this, MTablePaginationInner);
@@ -81,7 +54,7 @@ var MTablePaginationInner = /*#__PURE__*/function (_React$Component) {
       args[_key] = arguments[_key];
     }
 
-    _this = _super.call.apply(_super, [this].concat(args));
+    _this = (0, _possibleConstructorReturn2["default"])(this, (_getPrototypeOf2 = (0, _getPrototypeOf3["default"])(MTablePaginationInner)).call.apply(_getPrototypeOf2, [this].concat(args)));
     (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "handleFirstPageButtonClick", function (event) {
       _this.props.onChangePage(event, 0);
     });
