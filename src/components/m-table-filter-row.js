@@ -78,6 +78,7 @@ class MTableFilterRow extends React.Component {
 
   renderDefaultFilter = (columnDef) => {
     const localization = { ...MTableFilterRow.defaultProps.localization, ...this.props.localization };
+    const FilterIcon = this.props.icons.Filter;
     return (
       <TextField
         style={columnDef.type === 'numeric' ? { float: 'right' } : {}}
@@ -91,7 +92,7 @@ class MTableFilterRow extends React.Component {
           startAdornment: (
             <InputAdornment position="start">
               <Tooltip title={localization.filterTooltip}>
-                <this.props.icons.Filter />
+                <FilterIcon />
               </Tooltip>
             </InputAdornment>
           )
@@ -231,6 +232,7 @@ MTableFilterRow.propTypes = {
   hasActions: PropTypes.bool,
   localization: PropTypes.object,
   hideFilterIcons: PropTypes.bool,
+  icons: PropTypes.object
 };
 
 export default MTableFilterRow;
