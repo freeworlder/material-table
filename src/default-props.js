@@ -105,6 +105,7 @@ export const defaultProps = {
     detailPanelColumnAlignment: 'left',
     thirdSortClick: true,
     overflowY: 'auto',
+    groupInnerSelection: true,
   },
   localization: {
     grouping: {

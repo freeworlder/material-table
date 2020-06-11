@@ -17,13 +17,13 @@ var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/cl
 
 var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
 
-var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
-
-var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
-
 var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
 
 var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
 
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
 
@@ -37,17 +37,21 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var React = _interopRequireWildcard(require("react"));
 
-/* eslint-disable no-unused-vars */
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
 /* eslint-enable no-unused-vars */
 var MTableBody = /*#__PURE__*/function (_React$Component) {
   (0, _inherits2["default"])(MTableBody, _React$Component);
 
+  var _super = _createSuper(MTableBody);
+
   function MTableBody(props) {
     var _this;
 
     (0, _classCallCheck2["default"])(this, MTableBody);
-    _this = (0, _possibleConstructorReturn2["default"])(this, (0, _getPrototypeOf2["default"])(MTableBody).call(this, props));
+    _this = _super.call(this, props);
     (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "onEditableCellClick", function (rowIndex) {
       return function (field) {
         return function ()
@@ -154,12 +158,12 @@ var MTableBody = /*#__PURE__*/function (_React$Component) {
           addColumn++;
         }
 
-        return React.createElement(_TableRow["default"], {
+        return /*#__PURE__*/React.createElement(_TableRow["default"], {
           style: {
             height: rowHeight * (this.props.options.paging && this.props.options.emptyRowsWhenPaging ? this.props.pageSize : 1)
           },
           key: 'empty-' + 0
-        }, React.createElement(_TableCell["default"], {
+        }, /*#__PURE__*/React.createElement(_TableCell["default"], {
           style: {
             paddingTop: 0,
             paddingBottom: 0,
@@ -169,14 +173,14 @@ var MTableBody = /*#__PURE__*/function (_React$Component) {
           key: "empty-"
         }, localization.emptyDataSourceMessage));
       } else if (this.props.options.emptyRowsWhenPaging) {
-        return React.createElement(React.Fragment, null, (0, _toConsumableArray2["default"])(Array(emptyRowCount)).map(function (r, index) {
-          return React.createElement(_TableRow["default"], {
+        return /*#__PURE__*/React.createElement(React.Fragment, null, (0, _toConsumableArray2["default"])(Array(emptyRowCount)).map(function (r, index) {
+          return /*#__PURE__*/React.createElement(_TableRow["default"], {
             style: {
               height: rowHeight
             },
             key: 'empty-' + index
           });
-        }), emptyRowCount > 0 && React.createElement(_TableRow["default"], {
+        }), emptyRowCount > 0 && /*#__PURE__*/React.createElement(_TableRow["default"], {
           style: {
             height: 1
           },
@@ -195,7 +199,7 @@ var MTableBody = /*#__PURE__*/function (_React$Component) {
         _this2.rowRefs.push(ref);
 
         if (data.tableData.editing) {
-          return React.createElement(_this2.props.components.EditRow, {
+          return /*#__PURE__*/React.createElement(_this2.props.components.EditRow, {
             columns: _this2.props.columns.filter(function (columnDef) {
               return !columnDef.hidden;
             }),
@@ -219,7 +223,7 @@ var MTableBody = /*#__PURE__*/function (_React$Component) {
             deselectCell: _this2.deselectCell(index)
           });
         } else {
-          return React.createElement(_this2.props.components.Row, {
+          return /*#__PURE__*/React.createElement(_this2.props.components.Row, {
             components: _this2.props.components,
             icons: _this2.props.icons,
             data: data,
@@ -260,7 +264,7 @@ var MTableBody = /*#__PURE__*/function (_React$Component) {
 
         _this3.rowRefs.push(ref);
 
-        return React.createElement(_this3.props.components.GroupRow, {
+        return /*#__PURE__*/React.createElement(_this3.props.components.GroupRow, {
           actions: _this3.props.actions,
           key: groupData.value == null ? '' + index : groupData.value,
           columns: _this3.props.columns,
@@ -285,7 +289,8 @@ var MTableBody = /*#__PURE__*/function (_React$Component) {
           localization: (0, _objectSpread3["default"])({}, MTableBody.defaultProps.localization.editRow, _this3.props.localization.editRow),
           ref: ref,
           selectedCell: _this3.state.selectedCell,
-          onEditableCellClick: _this3.onEditableCellClick(index)
+          onEditableCellClick: _this3.onEditableCellClick(index),
+          groupInnerSelection: _this3.props.groupInnerSelection
         });
       });
     }
@@ -304,7 +309,7 @@ var MTableBody = /*#__PURE__*/function (_React$Component) {
         emptyRowCount = this.props.pageSize - renderData.length;
       }
 
-      return React.createElement(_TableBody["default"], null, this.props.options.filtering && React.createElement(this.props.components.FilterRow, {
+      return /*#__PURE__*/React.createElement(_TableBody["default"], null, this.props.options.filtering && /*#__PURE__*/React.createElement(this.props.components.FilterRow, {
         columns: this.props.columns.filter(function (columnDef) {
           return !columnDef.hidden;
         }),
@@ -322,7 +327,7 @@ var MTableBody = /*#__PURE__*/function (_React$Component) {
         isTreeData: this.props.isTreeData,
         filterCellStyle: this.props.options.filterCellStyle,
         hideFilterIcons: this.props.options.hideFilterIcons
-      }), this.props.showAddRow && this.props.options.addRowPosition === "first" && React.createElement(this.props.components.EditRow, {
+      }), this.props.showAddRow && this.props.options.addRowPosition === "first" && /*#__PURE__*/React.createElement(this.props.components.EditRow, {
         columns: this.props.columns.filter(function (columnDef) {
           return !columnDef.hidden;
         }),
@@ -338,7 +343,7 @@ var MTableBody = /*#__PURE__*/function (_React$Component) {
         onEditingCanceled: this.props.onEditingCanceled,
         onEditingApproved: this.props.onEditingApproved,
         getFieldValue: this.props.getFieldValue
-      }), groups.length > 0 ? this.renderGroupedRows(groups, renderData) : this.renderUngroupedRows(renderData), this.props.showAddRow && this.props.options.addRowPosition === "last" && React.createElement(this.props.components.EditRow, {
+      }), groups.length > 0 ? this.renderGroupedRows(groups, renderData) : this.renderUngroupedRows(renderData), this.props.showAddRow && this.props.options.addRowPosition === "last" && /*#__PURE__*/React.createElement(this.props.components.EditRow, {
         columns: this.props.columns.filter(function (columnDef) {
           return !columnDef.hidden;
         }),
@@ -370,7 +375,8 @@ MTableBody.defaultProps = {
     emptyDataSourceMessage: 'No records to display',
     filterRow: {},
     editRow: {}
-  }
+  },
+  groupInnerSelection: false
 };
 MTableBody.propTypes = {
   actions: _propTypes["default"].array,
@@ -402,7 +408,8 @@ MTableBody.propTypes = {
   cellEditingUpdate: _propTypes["default"].func,
   prevButtonRef: _propTypes["default"].object,
   nextButtonRef: _propTypes["default"].object,
-  totalRecords: _propTypes["default"].number
+  totalRecords: _propTypes["default"].number,
+  groupInnerSelection: _propTypes["default"].bool
 };
 var _default = MTableBody;
 exports["default"] = _default;

@@ -19,13 +19,13 @@ var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/cl
 
 var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
 
-var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
-
-var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
-
 var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
 
 var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
 
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
 
@@ -43,7 +43,9 @@ var _reactOutsideClickHandler = _interopRequireDefault(require("react-outside-cl
 
 var _core = require("@material-ui/core");
 
-/* eslint-disable no-unused-vars */
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
 /* eslint-enable no-unused-vars */
 
@@ -54,11 +56,13 @@ var isoDateRegex = /^\d{4}-(0[1-9]|1[0-2])-([12]\d|0[1-9]|3[01])([T\s](([01]\d|2
 var MTableCell = /*#__PURE__*/function (_React$Component) {
   (0, _inherits2["default"])(MTableCell, _React$Component);
 
+  var _super = _createSuper(MTableCell);
+
   function MTableCell(props) {
     var _this;
 
     (0, _classCallCheck2["default"])(this, MTableCell);
-    _this = (0, _possibleConstructorReturn2["default"])(this, (0, _getPrototypeOf2["default"])(MTableCell).call(this, props));
+    _this = _super.call(this, props);
     (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "onFieldChange", function (event) {
       var value = event.target.value;
       value && _this.setState({
@@ -134,11 +138,11 @@ var MTableCell = /*#__PURE__*/function (_React$Component) {
 
         switch (editingType) {
           case 'dropdown':
-            component = React.createElement(_reactOutsideClickHandler["default"], {
+            component = /*#__PURE__*/React.createElement(_reactOutsideClickHandler["default"], {
               onOutsideClick: function onOutsideClick() {
                 _this2.deselectCell(false);
               }
-            }, React.createElement(_Select["default"] // onChange={isMultiSelect ? this.onMultipleDropdownChanged : this.onDropdownChanged}
+            }, /*#__PURE__*/React.createElement(_Select["default"] // onChange={isMultiSelect ? this.onMultipleDropdownChanged : this.onDropdownChanged}
             , {
               onChange: this.onFieldChange,
               value: !value ? '' : value,
@@ -146,13 +150,13 @@ var MTableCell = /*#__PURE__*/function (_React$Component) {
               style: {
                 width: '100%'
               }
-            }, !value ? React.createElement("option", {
+            }, !value ? /*#__PURE__*/React.createElement("option", {
               key: value,
               value: ""
             }) : null, options.map(function (option) {
               var label = !!option && option instanceof Object ? option.label : option;
               var value = !!option && option instanceof Object ? option.value : option;
-              return React.createElement("option", {
+              return /*#__PURE__*/React.createElement("option", {
                 key: value,
                 value: value
               }, label);
@@ -162,11 +166,11 @@ var MTableCell = /*#__PURE__*/function (_React$Component) {
 
           case 'text':
           default:
-            component = React.createElement(_reactOutsideClickHandler["default"], {
+            component = /*#__PURE__*/React.createElement(_reactOutsideClickHandler["default"], {
               onOutsideClick: function onOutsideClick() {
                 _this2.deselectCell(false);
               }
-            }, React.createElement(_Input["default"], {
+            }, /*#__PURE__*/React.createElement(_Input["default"], {
               onChange: this.onFieldChange,
               onKeyPress: this.onCellKeyPress // suggestions={this.props.entities.map(entity => {
               //   return { label: entity.entity_name };
@@ -202,11 +206,11 @@ var MTableCell = /*#__PURE__*/function (_React$Component) {
         };
 
         if (this.props.value) {
-          return React.createElement(this.props.icons.Check, {
+          return /*#__PURE__*/React.createElement(this.props.icons.Check, {
             style: style
           });
         } else {
-          return React.createElement(this.props.icons.ThirdStateCheck, {
+          return /*#__PURE__*/React.createElement(this.props.icons.ThirdStateCheck, {
             style: style
           });
         }
@@ -281,7 +285,7 @@ var MTableCell = /*#__PURE__*/function (_React$Component) {
           cellEditing = _this$props.cellEditing,
           onEditableCellClick = _this$props.onEditableCellClick,
           cellProps = (0, _objectWithoutProperties2["default"])(_this$props, ["icons", "columnDef", "rowData", "selectedCell", "deselectCell", "cellEditing", "onEditableCellClick"]);
-      return React.createElement(_TableCell["default"], (0, _extends2["default"])({
+      return /*#__PURE__*/React.createElement(_TableCell["default"], (0, _extends2["default"])({
         size: this.props.size
       }, cellProps, {
         style: this.getStyle(),

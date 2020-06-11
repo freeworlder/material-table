@@ -66,7 +66,7 @@ var styles = function styles(theme) {
 var _default = (0, _withStyles["default"])(styles, {
   withTheme: true
 })(function (props) {
-  return _react["default"].createElement(_materialTable["default"], (0, _extends2["default"])({}, props, {
+  return /*#__PURE__*/_react["default"].createElement(_materialTable["default"], (0, _extends2["default"])({}, props, {
     ref: props.tableRef
   }));
 });

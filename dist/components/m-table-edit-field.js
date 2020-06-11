@@ -17,11 +17,11 @@ var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/cl
 
 var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
 
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
 var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
 
 var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
-
-var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
 
 var React = _interopRequireWildcard(require("react"));
 
@@ -39,12 +39,18 @@ var _pickers = require("@material-ui/pickers");
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
 var MTableEditField = /*#__PURE__*/function (_React$Component) {
   (0, _inherits2["default"])(MTableEditField, _React$Component);
 
+  var _super = _createSuper(MTableEditField);
+
   function MTableEditField() {
     (0, _classCallCheck2["default"])(this, MTableEditField);
-    return (0, _possibleConstructorReturn2["default"])(this, (0, _getPrototypeOf2["default"])(MTableEditField).apply(this, arguments));
+    return _super.apply(this, arguments);
   }
 
   (0, _createClass2["default"])(MTableEditField, [{
@@ -62,7 +68,7 @@ var MTableEditField = /*#__PURE__*/function (_React$Component) {
     value: function renderLookupField() {
       var _this = this;
 
-      return React.createElement(_Select["default"], (0, _extends2["default"])({}, this.getProps(), {
+      return /*#__PURE__*/React.createElement(_Select["default"], (0, _extends2["default"])({}, this.getProps(), {
         value: this.props.value === undefined ? '' : this.props.value,
         onChange: function onChange(event) {
           return _this.props.onChange(event.target.value);
@@ -71,7 +77,7 @@ var MTableEditField = /*#__PURE__*/function (_React$Component) {
           fontSize: 13
         }
       }), Object.keys(this.props.columnDef.lookup).map(function (key) {
-        return React.createElement(_MenuItem["default"], {
+        return /*#__PURE__*/React.createElement(_MenuItem["default"], {
           key: key,
           value: key
         }, _this.props.columnDef.lookup[key]);
@@ -82,7 +88,7 @@ var MTableEditField = /*#__PURE__*/function (_React$Component) {
     value: function renderBooleanField() {
       var _this2 = this;
 
-      return React.createElement(_Checkbox["default"], (0, _extends2["default"])({}, this.getProps(), {
+      return /*#__PURE__*/React.createElement(_Checkbox["default"], (0, _extends2["default"])({}, this.getProps(), {
         value: String(this.props.value),
         checked: Boolean(this.props.value),
         onChange: function onChange(event) {
@@ -98,10 +104,10 @@ var MTableEditField = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "renderDateField",
     value: function renderDateField() {
-      return React.createElement(_pickers.MuiPickersUtilsProvider, {
+      return /*#__PURE__*/React.createElement(_pickers.MuiPickersUtilsProvider, {
         utils: _dateFns["default"],
         locale: this.props.dateTimePickerLocalization
-      }, React.createElement(_pickers.DatePicker, (0, _extends2["default"])({}, this.getProps(), {
+      }, /*#__PURE__*/React.createElement(_pickers.DatePicker, (0, _extends2["default"])({}, this.getProps(), {
         format: "dd.MM.yyyy",
         value: this.props.value || null,
         onChange: this.props.onChange,
@@ -116,10 +122,10 @@ var MTableEditField = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "renderTimeField",
     value: function renderTimeField() {
-      return React.createElement(_pickers.MuiPickersUtilsProvider, {
+      return /*#__PURE__*/React.createElement(_pickers.MuiPickersUtilsProvider, {
         utils: _dateFns["default"],
         locale: this.props.dateTimePickerLocalization
-      }, React.createElement(_pickers.TimePicker, (0, _extends2["default"])({}, this.getProps(), {
+      }, /*#__PURE__*/React.createElement(_pickers.TimePicker, (0, _extends2["default"])({}, this.getProps(), {
         format: "HH:mm:ss",
         value: this.props.value || null,
         onChange: this.props.onChange,
@@ -134,10 +140,10 @@ var MTableEditField = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "renderDateTimeField",
     value: function renderDateTimeField() {
-      return React.createElement(_pickers.MuiPickersUtilsProvider, {
+      return /*#__PURE__*/React.createElement(_pickers.MuiPickersUtilsProvider, {
         utils: _dateFns["default"],
         locale: this.props.dateTimePickerLocalization
-      }, React.createElement(_pickers.DateTimePicker, (0, _extends2["default"])({}, this.getProps(), {
+      }, /*#__PURE__*/React.createElement(_pickers.DateTimePicker, (0, _extends2["default"])({}, this.getProps(), {
         format: "dd.MM.yyyy HH:mm:ss",
         value: this.props.value || null,
         onChange: this.props.onChange,
@@ -154,7 +160,7 @@ var MTableEditField = /*#__PURE__*/function (_React$Component) {
     value: function renderTextField() {
       var _this3 = this;
 
-      return React.createElement(_TextField["default"], (0, _extends2["default"])({}, this.getProps(), {
+      return /*#__PURE__*/React.createElement(_TextField["default"], (0, _extends2["default"])({}, this.getProps(), {
         style: this.props.columnDef.type === 'numeric' ? {
           "float": 'right'
         } : {},
@@ -176,7 +182,7 @@ var MTableEditField = /*#__PURE__*/function (_React$Component) {
     value: function renderCurrencyField() {
       var _this4 = this;
 
-      return React.createElement(_TextField["default"], (0, _extends2["default"])({}, this.getProps(), {
+      return /*#__PURE__*/React.createElement(_TextField["default"], (0, _extends2["default"])({}, this.getProps(), {
         placeholder: this.props.columnDef.title,
         value: this.props.value === undefined ? '' : this.props.value,
         onChange: function onChange(event) {

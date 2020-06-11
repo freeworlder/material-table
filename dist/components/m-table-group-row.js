@@ -17,13 +17,13 @@ var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/cl
 
 var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
 
-var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
-
-var _getPrototypeOf3 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
-
 var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
 
 var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
 
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
 
@@ -37,15 +37,17 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var React = _interopRequireWildcard(require("react"));
 
-/* eslint-disable no-unused-vars */
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
 /* eslint-enable no-unused-vars */
 var MTableGroupRow = /*#__PURE__*/function (_React$Component) {
   (0, _inherits2["default"])(MTableGroupRow, _React$Component);
 
-  function MTableGroupRow() {
-    var _getPrototypeOf2;
+  var _super = _createSuper(MTableGroupRow);
 
+  function MTableGroupRow() {
     var _this;
 
     (0, _classCallCheck2["default"])(this, MTableGroupRow);
@@ -54,7 +56,7 @@ var MTableGroupRow = /*#__PURE__*/function (_React$Component) {
       args[_key] = arguments[_key];
     }
 
-    _this = (0, _possibleConstructorReturn2["default"])(this, (_getPrototypeOf2 = (0, _getPrototypeOf3["default"])(MTableGroupRow)).call.apply(_getPrototypeOf2, [this].concat(args)));
+    _this = _super.call.apply(_super, [this].concat(args));
     (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "rotateIconStyle", function (isOpen) {
       return {
         transform: isOpen ? 'rotate(90deg)' : 'none'
@@ -81,7 +83,7 @@ var MTableGroupRow = /*#__PURE__*/function (_React$Component) {
         if (this.props.groups.length > this.props.level + 1) {
           // Is there another group
           detail = this.props.groupData.groups.map(function (groupData, index) {
-            return React.createElement(_this2.props.components.GroupRow, {
+            return /*#__PURE__*/React.createElement(_this2.props.components.GroupRow, {
               actions: _this2.props.actions,
               key: groupData.value || "" + index,
               columns: _this2.props.columns,
@@ -102,13 +104,14 @@ var MTableGroupRow = /*#__PURE__*/function (_React$Component) {
               onEditingApproved: _this2.props.onEditingApproved,
               options: _this2.props.options,
               hasAnyEditingRow: _this2.props.hasAnyEditingRow,
-              isTreeData: _this2.props.isTreeData
+              isTreeData: _this2.props.isTreeData,
+              groupInnerSelection: _this2.props.groupInnerSelection
             });
           });
         } else {
           detail = this.props.groupData.data.map(function (rowData, index) {
             if (rowData.tableData.editing) {
-              return React.createElement(_this2.props.components.EditRow, {
+              return /*#__PURE__*/React.createElement(_this2.props.components.EditRow, {
                 columns: _this2.props.columns,
                 components: _this2.props.components,
                 data: rowData,
@@ -122,10 +125,11 @@ var MTableGroupRow = /*#__PURE__*/function (_React$Component) {
                 detailPanel: _this2.props.detailPanel,
                 onEditingCanceled: _this2.props.onEditingCanceled,
                 onEditingApproved: _this2.props.onEditingApproved,
-                getFieldValue: _this2.props.getFieldValue
+                getFieldValue: _this2.props.getFieldValue,
+                groupInnerSelection: _this2.props.groupInnerSelection
               });
             } else {
-              return React.createElement(_this2.props.components.Row, {
+              return /*#__PURE__*/React.createElement(_this2.props.components.Row, {
                 actions: _this2.props.actions,
                 key: index,
                 columns: _this2.props.columns,
@@ -143,7 +147,8 @@ var MTableGroupRow = /*#__PURE__*/function (_React$Component) {
                 onTreeExpandChanged: _this2.props.onTreeExpandChanged,
                 onEditingCanceled: _this2.props.onEditingCanceled,
                 onEditingApproved: _this2.props.onEditingApproved,
-                hasAnyEditingRow: _this2.props.hasAnyEditingRow
+                hasAnyEditingRow: _this2.props.hasAnyEditingRow,
+                groupInnerSelection: _this2.props.groupInnerSelection
               });
             }
           });
@@ -153,7 +158,7 @@ var MTableGroupRow = /*#__PURE__*/function (_React$Component) {
       var freeCells = [];
 
       for (var i = 0; i < this.props.level; i++) {
-        freeCells.push(React.createElement(_TableCell["default"], {
+        freeCells.push( /*#__PURE__*/React.createElement(_TableCell["default"], {
           padding: "checkbox",
           key: i
         }));
@@ -174,20 +179,20 @@ var MTableGroupRow = /*#__PURE__*/function (_React$Component) {
       }
 
       var separator = this.props.options.groupRowSeparator || ": ";
-      return React.createElement(React.Fragment, null, React.createElement(_TableRow["default"], null, freeCells, React.createElement(this.props.components.Cell, {
+      return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_TableRow["default"], null, freeCells, /*#__PURE__*/React.createElement(this.props.components.Cell, {
         colSpan: colSpan,
         padding: "none",
         columnDef: column,
         value: value,
         icons: this.props.icons
-      }, React.createElement(_IconButton["default"], {
+      }, /*#__PURE__*/React.createElement(_IconButton["default"], {
         style: (0, _objectSpread2["default"])({
           transition: 'all ease 200ms'
         }, this.rotateIconStyle(this.props.groupData.isExpanded)),
         onClick: function onClick(event) {
           _this2.props.onGroupExpandChanged(_this2.props.path);
         }
-      }, React.createElement(this.props.icons.DetailPanel, null)), React.createElement("b", null, title, separator))), detail);
+      }, /*#__PURE__*/React.createElement(this.props.icons.DetailPanel, null)), /*#__PURE__*/React.createElement("b", null, title, separator))), detail);
     }
   }]);
   return MTableGroupRow;
@@ -221,5 +226,6 @@ MTableGroupRow.propTypes = {
   onEditingCanceled: _propTypes["default"].func,
   onEditingApproved: _propTypes["default"].func,
   options: _propTypes["default"].object,
-  path: _propTypes["default"].arrayOf(_propTypes["default"].number)
+  path: _propTypes["default"].arrayOf(_propTypes["default"].number),
+  groupInnerSelection: _propTypes["default"].bool
 };

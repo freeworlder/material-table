@@ -97,9 +97,30 @@ export default class MaterialTable extends React.Component {
     componentDidUpdate(prevProps) {
         // const propsChanged = Object.entries(this.props).reduce((didChange, prop) => didChange || prop[1] !== prevProps[prop[0]], false);
 
-        let propsChanged = !equal(prevProps.columns, this.props.columns);
+        const prevColumns = [...prevProps.columns].map(c => {
+            const col = {...c};
+            delete col.tableData;
+            return col;
+        });
+        const prevData = [...prevProps.data].map(r => {
+            const row = {...r};
+            delete row.tableData;
+            return row;
+        });
+        const curColumns = [...this.props.columns].map(c => {
+            const col = {...c};
+            delete col.tableData;
+            return col;
+        });
+        const curData = [...this.props.data].map(r => {
+            const row = {...r};
+            delete row.tableData;
+            return row;
+        });
+
+        let propsChanged = !equal(prevColumns, curColumns);
         propsChanged = propsChanged || !equal(prevProps.options, this.props.options);
-        propsChanged = propsChanged || !equal(prevProps.data, this.props.data);
+        propsChanged = propsChanged || !equal(prevData, curData);
 
         if (propsChanged) {
             const props = this.getProps(this.props);
@@ -620,6 +641,7 @@ export default class MaterialTable extends React.Component {
                     prevButtonRef={this.prevButtonRef}
                     nextButtonRef={this.nextButtonRef}
                     totalRecords={this.isRemoteData() ? this.state.query.totalCount : this.state.data.length}
+                    groupInnerSelection={this.props.options.groupInnerSelection}
                 />
                 {footer}
             </Table>

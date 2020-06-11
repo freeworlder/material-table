@@ -53,11 +53,13 @@ export default class MTableBodyRow extends React.Component {
     );
   }
 
-  renderSelectionColumn() {
+  renderSelectionColumn(disabled=false) {
     let checkboxProps = this.props.options.selectionProps || {};
     if (typeof checkboxProps === 'function') {
       checkboxProps = checkboxProps(this.props.data);
     }
+
+    checkboxProps['disabled'] = disabled;
 
     const size = CommonValues.elementSize(this.props);
     const selectionWidth = CommonValues.selectionMaxWidth(this.props, this.props.treeDataMaxLevel);
@@ -195,7 +197,16 @@ export default class MTableBodyRow extends React.Component {
   render() {
     const size = CommonValues.elementSize(this.props);
     const renderColumns = this.renderColumns();
-    if (this.props.options.selection) {
+    if (this.props.isTreeData) {
+      if (
+        (this.props.data.tableData.childRows && this.props.data.tableData.childRows.length > 0 && this.props.options.selection) || // group row with selection mode on
+        ((!this.props.data.tableData.childRows || !this.props.data.tableData.childRows.length) && this.props.options.groupInnerSelection) // inner group row with inner selection mode on
+      ) {
+        renderColumns.splice(0, 0, this.renderSelectionColumn());
+      } else {
+        renderColumns.splice(0, 0, this.renderSelectionColumn(true));
+      }
+    } else if (this.props.options.selection) {
       renderColumns.splice(0, 0, this.renderSelectionColumn());
     }
     if (this.props.actions && this.props.actions.filter(a => a.position === "row" || typeof a === "function").length > 0) {
@@ -388,5 +399,6 @@ MTableBodyRow.propTypes = {
     field: PropTypes.string
   }),
   onEditableCellClick: PropTypes.func,
-  deselectCell: PropTypes.func
+  deselectCell: PropTypes.func,
+  groupInnerSelection: PropTypes.bool
 };

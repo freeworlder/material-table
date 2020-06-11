@@ -149,6 +149,7 @@ export const propTypes = {
     showEmptyDataSourceMessage: PropTypes.bool,
     showFirstLastPageButtons: PropTypes.bool,
     showSelectAllCheckbox: PropTypes.bool,
+    groupInnerSelection: PropTypes.bool,
     showTitle: PropTypes.bool,
     showTextRowsSelected: PropTypes.bool,
     sorting: PropTypes.bool,

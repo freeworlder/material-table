@@ -19,13 +19,13 @@ var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/cl
 
 var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
 
-var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
-
-var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
-
 var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
 
 var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
 
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
 
@@ -55,17 +55,21 @@ var _core = require("@material-ui/core");
 
 var CommonValues = _interopRequireWildcard(require("./utils/common-values"));
 
-/* eslint-disable no-unused-vars */
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
 /* eslint-enable no-unused-vars */
 var MaterialTable = /*#__PURE__*/function (_React$Component) {
   (0, _inherits2["default"])(MaterialTable, _React$Component);
 
+  var _super = _createSuper(MaterialTable);
+
   function MaterialTable(_props) {
     var _this;
 
     (0, _classCallCheck2["default"])(this, MaterialTable);
-    _this = (0, _possibleConstructorReturn2["default"])(this, (0, _getPrototypeOf2["default"])(MaterialTable).call(this, _props));
+    _this = _super.call(this, _props);
     (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "dataManager", new _dataManager["default"]());
     (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "isRemoteData", function (props) {
       return !Array.isArray((props || _this.props).data);
@@ -388,11 +392,11 @@ var MaterialTable = /*#__PURE__*/function (_React$Component) {
     (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "renderTable", function (props) {
       var footer = _this.renderFooter();
 
-      return React.createElement(_Table["default"], {
+      return /*#__PURE__*/React.createElement(_Table["default"], {
         style: {
           tableLayout: props.options.fixedColumns && (props.options.fixedColumns.left || props.options.fixedColumns.right) ? 'fixed' : props.options.tableLayout
         }
-      }, props.options.header && React.createElement(props.components.Header, {
+      }, props.options.header && /*#__PURE__*/React.createElement(props.components.Header, {
         actions: props.actions,
         localization: (0, _objectSpread2["default"])({}, MaterialTable.defaultProps.localization.header, _this.props.localization.header),
         columns: _this.state.columns,
@@ -421,7 +425,7 @@ var MaterialTable = /*#__PURE__*/function (_React$Component) {
         thirdSortClick: props.options.thirdSortClick,
         treeDataMaxLevel: _this.state.treeDataMaxLevel,
         options: props.options
-      }), React.createElement(props.components.Body, {
+      }), /*#__PURE__*/React.createElement(props.components.Body, {
         actions: props.actions,
         components: props.components,
         icons: props.icons,
@@ -450,7 +454,8 @@ var MaterialTable = /*#__PURE__*/function (_React$Component) {
         cellEditingUpdate: _this.props.cellEditingUpdate,
         prevButtonRef: _this.prevButtonRef,
         nextButtonRef: _this.nextButtonRef,
-        totalRecords: _this.isRemoteData() ? _this.state.query.totalCount : _this.state.data.length
+        totalRecords: _this.isRemoteData() ? _this.state.query.totalCount : _this.state.data.length,
+        groupInnerSelection: _this.props.options.groupInnerSelection
       }), footer);
     });
     (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "getColumnsWidth", function (props, count) {
@@ -572,9 +577,29 @@ var MaterialTable = /*#__PURE__*/function (_React$Component) {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps) {
       // const propsChanged = Object.entries(this.props).reduce((didChange, prop) => didChange || prop[1] !== prevProps[prop[0]], false);
-      var propsChanged = !(0, _fastDeepEqual["default"])(prevProps.columns, this.props.columns);
+      var prevColumns = (0, _toConsumableArray2["default"])(prevProps.columns).map(function (c) {
+        var col = (0, _objectSpread2["default"])({}, c);
+        delete col.tableData;
+        return col;
+      });
+      var prevData = (0, _toConsumableArray2["default"])(prevProps.data).map(function (r) {
+        var row = (0, _objectSpread2["default"])({}, r);
+        delete row.tableData;
+        return row;
+      });
+      var curColumns = (0, _toConsumableArray2["default"])(this.props.columns).map(function (c) {
+        var col = (0, _objectSpread2["default"])({}, c);
+        delete col.tableData;
+        return col;
+      });
+      var curData = (0, _toConsumableArray2["default"])(this.props.data).map(function (r) {
+        var row = (0, _objectSpread2["default"])({}, r);
+        delete row.tableData;
+        return row;
+      });
+      var propsChanged = !(0, _fastDeepEqual["default"])(prevColumns, curColumns);
       propsChanged = propsChanged || !(0, _fastDeepEqual["default"])(prevProps.options, this.props.options);
-      propsChanged = propsChanged || !(0, _fastDeepEqual["default"])(prevProps.data, this.props.data);
+      propsChanged = propsChanged || !(0, _fastDeepEqual["default"])(prevData, curData);
 
       if (propsChanged) {
         var props = this.getProps(this.props);
@@ -704,13 +729,13 @@ var MaterialTable = /*#__PURE__*/function (_React$Component) {
         var isOutsidePageNumbers = this.isOutsidePageNumbers(props);
         var currentPage = isOutsidePageNumbers ? Math.min(props.page, Math.floor(props.totalCount / this.state.pageSize)) : this.state.currentPage;
         var totalCount = isOutsidePageNumbers ? props.totalCount : this.state.data.length;
-        var footerToolbar = props.footerToolbar ? React.createElement(_TableRow["default"], null, React.createElement(this.props.footerToolbar, {
+        var footerToolbar = props.footerToolbar ? /*#__PURE__*/React.createElement(_TableRow["default"], null, /*#__PURE__*/React.createElement(this.props.footerToolbar, {
           onFilterChange: this.onFilterChange,
           columns: this.state.columns,
           data: this.state.data,
           footerData: this.props.footerData
         })) : null;
-        return React.createElement(_TableFooter["default"], null, React.createElement(_TableRow["default"], null, React.createElement(props.components.Pagination, {
+        return /*#__PURE__*/React.createElement(_TableFooter["default"], null, /*#__PURE__*/React.createElement(_TableRow["default"], null, /*#__PURE__*/React.createElement(props.components.Pagination, {
           classes: {
             root: props.classes.paginationRoot,
             toolbar: props.classes.paginationToolbar,
@@ -724,7 +749,7 @@ var MaterialTable = /*#__PURE__*/function (_React$Component) {
           rowsPerPageOptions: props.options.pageSizeOptions,
           SelectProps: {
             renderValue: function renderValue(value) {
-              return React.createElement("div", {
+              return /*#__PURE__*/React.createElement("div", {
                 style: {
                   padding: '0px 5px'
                 }
@@ -735,13 +760,13 @@ var MaterialTable = /*#__PURE__*/function (_React$Component) {
           onChangePage: this.onChangePage,
           onChangeRowsPerPage: this.onChangeRowsPerPage,
           ActionsComponent: function ActionsComponent(subProps) {
-            return props.options.paginationType === 'normal' ? React.createElement(_components.MTablePagination, (0, _extends2["default"])({}, subProps, {
+            return props.options.paginationType === 'normal' ? /*#__PURE__*/React.createElement(_components.MTablePagination, (0, _extends2["default"])({}, subProps, {
               icons: props.icons,
               localization: localization,
               showFirstLastPageButtons: props.options.showFirstLastPageButtons,
               prevButtonRef: _this4.prevButtonRef,
               nextButtonRef: _this4.nextButtonRef
-            })) : React.createElement(_components.MTableSteppedPagination, (0, _extends2["default"])({}, subProps, {
+            })) : /*#__PURE__*/React.createElement(_components.MTableSteppedPagination, (0, _extends2["default"])({}, subProps, {
               icons: props.icons,
               localization: localization,
               showFirstLastPageButtons: props.options.showFirstLastPageButtons,
@@ -762,13 +787,13 @@ var MaterialTable = /*#__PURE__*/function (_React$Component) {
       var _this5 = this;
 
       var props = this.getProps();
-      return React.createElement(_reactBeautifulDnd.DragDropContext, {
+      return /*#__PURE__*/React.createElement(_reactBeautifulDnd.DragDropContext, {
         onDragEnd: this.onDragEnd
-      }, React.createElement(props.components.Container, {
+      }, /*#__PURE__*/React.createElement(props.components.Container, {
         style: (0, _objectSpread2["default"])({
           position: 'relative'
         }, props.style)
-      }, props.options.toolbar && React.createElement(props.components.Toolbar, {
+      }, props.options.toolbar && /*#__PURE__*/React.createElement(props.components.Toolbar, {
         actions: props.actions,
         components: props.components,
         selectedRows: this.state.selectedCount > 0 ? this.state.originalData.filter(function (a) {
@@ -796,7 +821,7 @@ var MaterialTable = /*#__PURE__*/function (_React$Component) {
         onSearchChanged: this.onSearchChange,
         onColumnsChanged: this.onChangeColumnHidden,
         localization: (0, _objectSpread2["default"])({}, MaterialTable.defaultProps.localization.toolbar, this.props.localization.toolbar)
-      }), props.options.grouping && React.createElement(props.components.Groupbar, {
+      }), props.options.grouping && /*#__PURE__*/React.createElement(props.components.Groupbar, {
         icons: props.icons,
         localization: (0, _objectSpread2["default"])({}, MaterialTable.defaultProps.localization.grouping, props.localization.grouping),
         groupColumns: this.state.columns.filter(function (col) {
@@ -806,24 +831,24 @@ var MaterialTable = /*#__PURE__*/function (_React$Component) {
         }),
         onSortChanged: this.onChangeGroupOrder,
         onGroupRemoved: this.onGroupRemoved
-      }), React.createElement(ScrollBar, {
+      }), /*#__PURE__*/React.createElement(ScrollBar, {
         "double": props.options.doubleHorizontalScroll
-      }, React.createElement(_reactBeautifulDnd.Droppable, {
+      }, /*#__PURE__*/React.createElement(_reactBeautifulDnd.Droppable, {
         droppableId: "headers",
         direction: "horizontal"
       }, function (provided, snapshot) {
         var table = _this5.renderTable(props);
 
-        return React.createElement("div", {
+        return /*#__PURE__*/React.createElement("div", {
           ref: provided.innerRef
-        }, React.createElement("div", {
+        }, /*#__PURE__*/React.createElement("div", {
           ref: _this5.tableContainerDiv,
           style: {
             maxHeight: props.options.maxBodyHeight,
             minHeight: props.options.minBodyHeight,
             overflowY: props.options.overflowY
           }
-        }, _this5.state.width && props.options.fixedColumns && props.options.fixedColumns.right ? React.createElement("div", {
+        }, _this5.state.width && props.options.fixedColumns && props.options.fixedColumns.right ? /*#__PURE__*/React.createElement("div", {
           style: {
             width: _this5.getColumnsWidth(props, -1 * props.options.fixedColumns.right),
             position: 'absolute',
@@ -833,13 +858,13 @@ var MaterialTable = /*#__PURE__*/function (_React$Component) {
             overflowX: 'hidden',
             zIndex: 11
           }
-        }, React.createElement("div", {
+        }, /*#__PURE__*/React.createElement("div", {
           style: {
             width: _this5.state.width,
             background: 'white',
             transform: "translateX(calc(".concat(_this5.getColumnsWidth(props, -1 * props.options.fixedColumns.right), " - 100%))")
           }
-        }, table)) : null, React.createElement("div", null, table), _this5.state.width && props.options.fixedColumns && props.options.fixedColumns.left ? React.createElement("div", {
+        }, table)) : null, /*#__PURE__*/React.createElement("div", null, table), _this5.state.width && props.options.fixedColumns && props.options.fixedColumns.left ? /*#__PURE__*/React.createElement("div", {
           style: {
             width: _this5.getColumnsWidth(props, props.options.fixedColumns.left),
             position: 'absolute',
@@ -849,18 +874,18 @@ var MaterialTable = /*#__PURE__*/function (_React$Component) {
             overflowX: 'hidden',
             zIndex: 11
           }
-        }, React.createElement("div", {
+        }, /*#__PURE__*/React.createElement("div", {
           style: {
             width: _this5.state.width,
             background: 'white'
           }
         }, table)) : null), provided.placeholder);
-      })), (this.state.isLoading || props.isLoading) && props.options.loadingType === "linear" && React.createElement("div", {
+      })), (this.state.isLoading || props.isLoading) && props.options.loadingType === "linear" && /*#__PURE__*/React.createElement("div", {
         style: {
           position: 'relative',
           width: '100%'
         }
-      }, React.createElement("div", {
+      }, /*#__PURE__*/React.createElement("div", {
         style: {
           position: 'absolute',
           top: 0,
@@ -868,7 +893,7 @@ var MaterialTable = /*#__PURE__*/function (_React$Component) {
           height: '100%',
           width: '100%'
         }
-      }, React.createElement(_LinearProgress["default"], null))), (this.state.isLoading || props.isLoading) && props.options.loadingType === 'overlay' && React.createElement("div", {
+      }, /*#__PURE__*/React.createElement(_LinearProgress["default"], null))), (this.state.isLoading || props.isLoading) && props.options.loadingType === 'overlay' && /*#__PURE__*/React.createElement("div", {
         style: {
           position: 'absolute',
           top: 0,
@@ -877,7 +902,7 @@ var MaterialTable = /*#__PURE__*/function (_React$Component) {
           width: '100%',
           zIndex: 11
         }
-      }, React.createElement(props.components.OverlayLoading, {
+      }, /*#__PURE__*/React.createElement(props.components.OverlayLoading, {
         theme: props.theme
       }))));
     }
@@ -911,9 +936,9 @@ var ScrollBar = (0, _core.withStyles)(style)(function (_ref) {
       classes = _ref.classes;
 
   if (_double) {
-    return React.createElement(_reactDoubleScrollbar["default"], null, children);
+    return /*#__PURE__*/React.createElement(_reactDoubleScrollbar["default"], null, children);
   } else {
-    return React.createElement("div", {
+    return /*#__PURE__*/React.createElement("div", {
       className: classes.horizontalScrollContainer,
       style: {
         overflowX: 'auto',
