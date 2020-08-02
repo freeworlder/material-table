@@ -3,8 +3,10 @@ import * as React from 'react';
 import TableCell from '@material-ui/core/TableCell';
 import Input from '@material-ui/core/Input';
 import Select from '@material-ui/core/Select';
-import PropTypes from 'prop-types';
+import DateTimePickerLocal from './DateRangePickerLocal';
+import PropTypes, {instanceOf} from 'prop-types';
 import OutsideClickHandler from 'react-outside-click-handler';
+import { format } from 'date-fns';
 import { withStyles } from '@material-ui/core';
 /* eslint-enable no-unused-vars */
 /* eslint-disable no-useless-escape */
@@ -19,9 +21,33 @@ export default class MTableCell extends React.Component {
         };
     }
 
-    onFieldChange = event => {
+    componentDidMount() {
+        this.setState({ fieldValue: this.props.value });
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        const value = this.props.value;
+        const oldValue = prevProps.value;
+        let shouldUpdate = false;
+        if (value && oldValue) {
+              if (
+                (value instanceof Date && value.valueOf() !== oldValue.valueOf()) ||
+                (Array.isArray(value) && JSON.stringify(value) !== JSON.stringify(oldValue)) ||
+                (!(value instanceof Date) && !Array.isArray(value) && value !== oldValue)
+              ) {
+                  shouldUpdate = true;
+              }
+        } else if (value || oldValue) {
+            shouldUpdate = true;
+        }
+        shouldUpdate && this.setState({ fieldValue: this.props.value });
+    }
+
+    onFieldChange = (event, cb=() => {}) => {
         const value = event.target.value;
-        value && this.setState({ fieldValue: value });
+        if (value !== this.state.fieldValue) {
+            this.setState({ fieldValue: value }, cb);
+        } else cb();
     };
 
     onCellKeyPress = event => {
@@ -31,7 +57,8 @@ export default class MTableCell extends React.Component {
     };
 
     deselectCell = selectNext => {
-        const value = this.state.fieldValue !== null ? this.state.fieldValue : this.props.value;
+        // const value = this.state.fieldValue !== null ? this.state.fieldValue : this.props.value;
+        const value = this.state.fieldValue;
         this.props.deselectCell(value, selectNext)
             .then(() => {
                 this.setState({ fieldValue: null });
@@ -81,6 +108,24 @@ export default class MTableCell extends React.Component {
                         </OutsideClickHandler>
                     );
                     break;
+
+                case 'datetimepicker':
+                    component = (
+                        <DateTimePickerLocal
+                          onChange={event => {
+                              this.onFieldChange(event, () => {
+                                  this.deselectCell(false);
+                              });
+                          }}
+                          value={value}
+                          fullwidth
+                          deselectCell={this.deselectCell}
+                          format={this.props.columnDef.format}
+                          minDateTime={cellEditingProps.minDateTime}
+                        />
+                      );
+                    break;
+
                 // ignore-no-fallthrough-next-line
                 case 'text':
                 default:
@@ -144,9 +189,13 @@ export default class MTableCell extends React.Component {
             }
         } else if (this.props.columnDef.type === 'datetime') {
             if (this.props.value instanceof Date) {
-                return this.props.value.toLocaleString();
+                return format(this.props.value, this.props.columnDef.format, new Date());
             } else if (isoDateRegex.exec(this.props.value)) {
-                return new Date(this.props.value).toLocaleString();
+                if (this.props.columnDef.format) {
+                   return format(new Date(this.props.value), this.props.columnDef.format, new Date());
+                } else {
+                    return new Date(this.props.value).toLocaleString();
+                }
             } else {
                 return this.props.value;
             }

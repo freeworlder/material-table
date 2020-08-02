@@ -27,7 +27,14 @@ export default class MTableBodyRow extends React.Component {
             key={"cell-" + this.props.data.tableData.id + "-" + columnDef.tableData.id}
             rowData={this.props.data}
             onEditableCellClick={this.props.onEditableCellClick(columnDef.field)}
-            cellEditing={columnDef.editableCells && this.props.selectedCell.rowIndex === this.props.index && this.props.selectedCell.field === columnDef.field}
+            cellEditing={columnDef.editableCells && this.props.selectedCell.rowIndex === this.props.index && this.props.selectedCell.field === columnDef.field &&
+            (
+              (this.props.isTreeData &&
+                (this.props.data.tableData.childRows && this.props.data.tableData.childRows.length > 0) || // group row - always can be edited
+                ((!this.props.data.tableData.childRows || !this.props.data.tableData.childRows.length) && this.props.options.groupInnerCellEditing) // inner group row - can be edited only if the groupInnerCellEditing is true
+              ) ||
+              !this.props.isTreeData)
+            }
             deselectCell={this.props.deselectCell(columnDef.field)}
           />
         );
@@ -53,7 +60,7 @@ export default class MTableBodyRow extends React.Component {
     );
   }
 
-  renderSelectionColumn(disabled=false) {
+  renderSelectionColumn(disabled = false) {
     let checkboxProps = this.props.options.selectionProps || {};
     if (typeof checkboxProps === 'function') {
       checkboxProps = checkboxProps(this.props.data);

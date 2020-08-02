@@ -66,7 +66,7 @@ class MTableBody extends React.Component {
         delete entity.tableData;
         //todo: check if tableData is present and needs deleting, check format of renderData
         return new Promise(resolve => {
-            if (value !== null && entity[field] !== value) {
+            if (entity[field] !== value) {
                 this.props
                     .cellEditingUpdate({
                         ...entity,

@@ -210,7 +210,8 @@ var defaultProps = {
     detailPanelColumnAlignment: 'left',
     thirdSortClick: true,
     overflowY: 'auto',
-    groupInnerSelection: true
+    groupInnerSelection: true,
+    groupInnerCellEditing: false
   },
   localization: {
     grouping: {

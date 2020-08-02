@@ -106,6 +106,7 @@ export const defaultProps = {
     thirdSortClick: true,
     overflowY: 'auto',
     groupInnerSelection: true,
+    groupInnerCellEditing: false
   },
   localization: {
     grouping: {

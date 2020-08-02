@@ -37,9 +37,13 @@ var _Input = _interopRequireDefault(require("@material-ui/core/Input"));
 
 var _Select = _interopRequireDefault(require("@material-ui/core/Select"));
 
-var _propTypes = _interopRequireDefault(require("prop-types"));
+var _DateRangePickerLocal = _interopRequireDefault(require("./DateRangePickerLocal"));
+
+var _propTypes = _interopRequireWildcard(require("prop-types"));
 
 var _reactOutsideClickHandler = _interopRequireDefault(require("react-outside-click-handler"));
+
+var _dateFns = require("date-fns");
 
 var _core = require("@material-ui/core");
 
@@ -64,10 +68,14 @@ var MTableCell = /*#__PURE__*/function (_React$Component) {
     (0, _classCallCheck2["default"])(this, MTableCell);
     _this = _super.call(this, props);
     (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "onFieldChange", function (event) {
+      var cb = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
       var value = event.target.value;
-      value && _this.setState({
-        fieldValue: value
-      });
+
+      if (value !== _this.state.fieldValue) {
+        _this.setState({
+          fieldValue: value
+        }, cb);
+      } else cb();
     });
     (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "onCellKeyPress", function (event) {
       if (event.charCode === 13) {
@@ -75,7 +83,8 @@ var MTableCell = /*#__PURE__*/function (_React$Component) {
       }
     });
     (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "deselectCell", function (selectNext) {
-      var value = _this.state.fieldValue !== null ? _this.state.fieldValue : _this.props.value;
+      // const value = this.state.fieldValue !== null ? this.state.fieldValue : this.props.value;
+      var value = _this.state.fieldValue;
 
       _this.props.deselectCell(value, selectNext).then(function () {
         _this.setState({
@@ -118,6 +127,32 @@ var MTableCell = /*#__PURE__*/function (_React$Component) {
   }
 
   (0, _createClass2["default"])(MTableCell, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.setState({
+        fieldValue: this.props.value
+      });
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps, prevState, snapshot) {
+      var value = this.props.value;
+      var oldValue = prevProps.value;
+      var shouldUpdate = false;
+
+      if (value && oldValue) {
+        if (value instanceof Date && value.valueOf() !== oldValue.valueOf() || Array.isArray(value) && JSON.stringify(value) !== JSON.stringify(oldValue) || !(value instanceof Date) && !Array.isArray(value) && value !== oldValue) {
+          shouldUpdate = true;
+        }
+      } else if (value || oldValue) {
+        shouldUpdate = true;
+      }
+
+      shouldUpdate && this.setState({
+        fieldValue: this.props.value
+      });
+    }
+  }, {
     key: "getContent",
     // onMultipleDropdownChanged = event => {
     //     // tbd
@@ -161,6 +196,21 @@ var MTableCell = /*#__PURE__*/function (_React$Component) {
                 value: value
               }, label);
             })));
+            break;
+
+          case 'datetimepicker':
+            component = /*#__PURE__*/React.createElement(_DateRangePickerLocal["default"], {
+              onChange: function onChange(event) {
+                _this2.onFieldChange(event, function () {
+                  _this2.deselectCell(false);
+                });
+              },
+              value: value,
+              fullwidth: true,
+              deselectCell: this.deselectCell,
+              format: this.props.columnDef.format,
+              minDateTime: cellEditingProps.minDateTime
+            });
             break;
           // ignore-no-fallthrough-next-line
 
@@ -232,9 +282,13 @@ var MTableCell = /*#__PURE__*/function (_React$Component) {
         }
       } else if (this.props.columnDef.type === 'datetime') {
         if (this.props.value instanceof Date) {
-          return this.props.value.toLocaleString();
+          return (0, _dateFns.format)(this.props.value, this.props.columnDef.format, new Date());
         } else if (isoDateRegex.exec(this.props.value)) {
-          return new Date(this.props.value).toLocaleString();
+          if (this.props.columnDef.format) {
+            return (0, _dateFns.format)(new Date(this.props.value), this.props.columnDef.format, new Date());
+          } else {
+            return new Date(this.props.value).toLocaleString();
+          }
         } else {
           return this.props.value;
         }

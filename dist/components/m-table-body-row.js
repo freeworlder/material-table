@@ -100,7 +100,9 @@ var MTableBodyRow = /*#__PURE__*/function (_React$Component) {
           key: "cell-" + _this2.props.data.tableData.id + "-" + columnDef.tableData.id,
           rowData: _this2.props.data,
           onEditableCellClick: _this2.props.onEditableCellClick(columnDef.field),
-          cellEditing: columnDef.editableCells && _this2.props.selectedCell.rowIndex === _this2.props.index && _this2.props.selectedCell.field === columnDef.field,
+          cellEditing: columnDef.editableCells && _this2.props.selectedCell.rowIndex === _this2.props.index && _this2.props.selectedCell.field === columnDef.field && (_this2.props.isTreeData && _this2.props.data.tableData.childRows && _this2.props.data.tableData.childRows.length > 0 || // group row - always can be edited
+          (!_this2.props.data.tableData.childRows || !_this2.props.data.tableData.childRows.length) && _this2.props.options.groupInnerCellEditing // inner group row - can be edited only if the groupInnerCellEditing is true
+          || !_this2.props.isTreeData),
           deselectCell: _this2.props.deselectCell(columnDef.field)
         });
       });

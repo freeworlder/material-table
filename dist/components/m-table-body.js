@@ -75,7 +75,7 @@ var MTableBody = /*#__PURE__*/function (_React$Component) {
           delete entity.tableData; //todo: check if tableData is present and needs deleting, check format of renderData
 
           return new Promise(function (resolve) {
-            if (value !== null && entity[field] !== value) {
+            if (entity[field] !== value) {
               _this.props.cellEditingUpdate((0, _objectSpread3["default"])({}, entity, (0, _defineProperty2["default"])({}, field, value))).then(function () {
                 resolve();
 
