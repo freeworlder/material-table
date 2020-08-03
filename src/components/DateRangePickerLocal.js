@@ -107,7 +107,7 @@ class DateTimePickerLocal extends React.Component {
             ampm={false}
             inputFormat={this.props.format}
             seconds={this.props.format.includes('ss')}
-            minDateTime={this.props.minDateTime}
+            minDateTime={this.props.futureOnly ? new Date() : this.props.minDateTime}
           />
         </LocalizationProvider>
       </OutsideClickHandler>
@@ -119,7 +119,12 @@ DateTimePickerLocal.propTypes = {
   value: PropTypes.object,
   onChange: PropTypes.func,
   format: PropTypes.string,
-  minDateTime: PropTypes.object
+  minDateTime: PropTypes.object,
+  futureOnly: PropTypes.bool
+};
+
+DateTimePicker.defaultProps = {
+  futureOnly: false
 };
 
 export default DateTimePickerLocal;

@@ -122,6 +122,7 @@ export default class MTableCell extends React.Component {
                           deselectCell={this.deselectCell}
                           format={this.props.columnDef.format}
                           minDateTime={cellEditingProps.minDateTime}
+                          futureOnly={cellEditingProps.futureOnly}
                         />
                       );
                     break;

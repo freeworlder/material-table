@@ -209,7 +209,8 @@ var MTableCell = /*#__PURE__*/function (_React$Component) {
               fullwidth: true,
               deselectCell: this.deselectCell,
               format: this.props.columnDef.format,
-              minDateTime: cellEditingProps.minDateTime
+              minDateTime: cellEditingProps.minDateTime,
+              futureOnly: cellEditingProps.futureOnly
             });
             break;
           // ignore-no-fallthrough-next-line

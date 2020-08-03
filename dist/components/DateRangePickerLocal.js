@@ -177,7 +177,7 @@ var DateTimePickerLocal = /*#__PURE__*/function (_React$Component) {
         ampm: false,
         inputFormat: this.props.format,
         seconds: this.props.format.includes('ss'),
-        minDateTime: this.props.minDateTime
+        minDateTime: this.props.futureOnly ? new Date() : this.props.minDateTime
       }))));
     }
   }]);
@@ -188,7 +188,11 @@ DateTimePickerLocal.propTypes = {
   value: _propTypes["default"].object,
   onChange: _propTypes["default"].func,
   format: _propTypes["default"].string,
-  minDateTime: _propTypes["default"].object
+  minDateTime: _propTypes["default"].object,
+  futureOnly: _propTypes["default"].bool
+};
+_pickers.DateTimePicker.defaultProps = {
+  futureOnly: false
 };
 var _default = DateTimePickerLocal;
 exports["default"] = _default;
