@@ -175,7 +175,8 @@ var DateTimePickerLocal = /*#__PURE__*/function (_React$Component) {
         showTodayButton: true,
         ampm: false,
         inputFormat: this.props.format,
-        seconds: this.props.minDateTime
+        seconds: this.props.format.includes('ss'),
+        minDateTime: this.props.minDateTime
       }))));
     }
   }]);
