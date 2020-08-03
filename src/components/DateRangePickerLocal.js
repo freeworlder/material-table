@@ -100,7 +100,7 @@ class DateTimePickerLocal extends React.Component {
             }}
             onClose={() => {
               this.setState({pickerOpen: false});
-              // closing will trigger onAccept as well
+              this.onAccept();
             }}
             autoAccept
             showTodayButton
