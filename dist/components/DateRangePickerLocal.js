@@ -168,8 +168,9 @@ var DateTimePickerLocal = /*#__PURE__*/function (_React$Component) {
         onClose: function onClose() {
           _this2.setState({
             pickerOpen: false
-          }); // closing will trigger onAccept as well
+          });
 
+          _this2.onAccept();
         },
         autoAccept: true,
         showTodayButton: true,
